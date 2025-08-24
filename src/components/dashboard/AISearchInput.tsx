@@ -32,6 +32,7 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from '@/components/ui/popover';
+import { cn } from '@/lib/utils';
 
 // Types
 interface Place {
@@ -421,7 +422,7 @@ const PlacesDropdown: React.FC<PlacesDropdownProps> = ({
 interface InputWithHighlightsProps {
 	value: string;
 	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-	inputRef: React.RefObject<HTMLInputElement>;
+	inputRef: React.RefObject<HTMLInputElement | null>;
 	placeholder?: string;
 	currentAction: string;
 }
@@ -508,8 +509,12 @@ const ActionButtons: React.FC = () => (
 	</div>
 );
 
+type AISearchInputProps = {
+	className?: string;
+};
+
 // Main Component
-const AISearchInput: React.FC = () => {
+const AISearchInput: React.FC<AISearchInputProps> = props => {
 	const [inputValue, setInputValue] = useState<string>('');
 	const [showPlacesDropdown, setShowPlacesDropdown] = useState<boolean>(false);
 	const [cursorPosition, setCursorPosition] = useState<number>(0);
@@ -580,13 +585,18 @@ const AISearchInput: React.FC = () => {
 	);
 
 	return (
-		<div className="flex flex-col items-center w-full max-w-2xl mx-auto mt-8">
+		<div
+			className={cn(
+				'flex flex-col items-center w-full max-w-2xl mx-auto mt-8',
+				props.className
+			)}
+		>
 			<div className="relative w-full rounded-2xl bg-white border border-gray-200 shadow-sm p-4 hover:shadow-md transition-shadow duration-200">
 				<div className="flex-1 mb-6 relative">
 					<InputWithHighlights
 						value={inputValue}
 						onChange={handleInputChange}
-						inputRef={inputRef}
+						inputRef={inputRef!}
 						currentAction={currentAction}
 					/>
 

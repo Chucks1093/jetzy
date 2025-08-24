@@ -1,7 +1,6 @@
 import AISearchInput from '@/components/dashboard/AISearchInput';
 import LocationCard from '@/components/dashboard/LocationCard';
 import { motion } from 'framer-motion';
-
 import {
 	Carousel,
 	CarouselContent,
@@ -11,48 +10,71 @@ import {
 } from '@/components/ui/carousel';
 import LocationSelector from '@/components/dashboard/LocationSelector';
 import Autoplay from 'embla-carousel-autoplay';
+
 const LocationCarousel = () => {
-	// Sample data
+	// New York specific data
 	const data = [
 		{
-			image: '/locations/beach-people.jpg',
-			question: 'Where can I find the best beaches for swimming?',
-			likeCount: 187,
+			image: '/locations/central-park.jpg',
+			question: 'What are the best spots to visit in Central Park?',
+			likeCount: 324,
 		},
 		{
-			image: '/locations/beach.jpg',
-			question: 'What are the most scenic coastal drives nearby?',
-			likeCount: 142,
+			image: '/locations/brooklyn-bridge.jpg',
+			question: 'Where can I get the best views of the Brooklyn Bridge?',
+			likeCount: 289,
 		},
 		{
-			image: '/locations/mountain-forest.jpg',
-			question: 'Which hiking trails offer the best mountain views?',
-			likeCount: 256,
+			image: '/locations/times-square.jpg',
+			question: 'What are the must-see Broadway shows in Times Square?',
+			likeCount: 456,
 		},
 		{
-			image: '/locations/china.jpg',
-			question: 'Where can I find the most unique cocktails around here?',
-			likeCount: 203,
+			image: '/locations/soho-shopping.jpg',
+			question: 'Where can I find the best vintage shopping in SoHo?',
+			likeCount: 198,
 		},
 		{
-			image: '/locations/beach-people.jpg',
-			question: 'Where can I find the best beaches for swimming?',
-			likeCount: 187,
+			image: '/locations/chinatown-nyc.jpg',
+			question: 'What are the most authentic dim sum places in Chinatown?',
+			likeCount: 267,
 		},
 		{
-			image: '/locations/beach.jpg',
-			question: 'What are the most scenic coastal drives nearby?',
-			likeCount: 142,
+			image: '/locations/high-line.jpg',
+			question: 'What are the best photo spots along the High Line?',
+			likeCount: 342,
 		},
 		{
-			image: '/locations/mountain-forest.jpg',
-			question: 'Which hiking trails offer the best mountain views?',
-			likeCount: 256,
+			image: '/locations/east-village.jpg',
+			question:
+				'Where can I find the coolest speakeasy bars in East Village?',
+			likeCount: 178,
 		},
 		{
-			image: '/locations/china.jpg',
-			question: 'Where can I find the most unique cocktails around here?',
-			likeCount: 203,
+			image: '/locations/williamsburg.jpg',
+			question: 'What are the trendiest rooftop bars in Williamsburg?',
+			likeCount: 231,
+		},
+		{
+			image: '/locations/little-italy.jpg',
+			question: 'Which restaurants serve the best pizza in Little Italy?',
+			likeCount: 389,
+		},
+		{
+			image: '/locations/greenwich-village.jpg',
+			question:
+				'Where can I experience the best jazz clubs in Greenwich Village?',
+			likeCount: 156,
+		},
+		{
+			image: '/locations/chelsea-market.jpg',
+			question: 'What are the must-try food vendors at Chelsea Market?',
+			likeCount: 298,
+		},
+		{
+			image: '/locations/statue-liberty.jpg',
+			question: "What's the best way to visit the Statue of Liberty?",
+			likeCount: 412,
 		},
 	];
 
@@ -109,7 +131,7 @@ function Home() {
 						/>
 					</div>
 					<h2 className=" text-[2.2rem] font-medium text-gray-900 font-montserrat tracking-tight">
-						Start Exploring Now.
+						Discover New York City Now.
 					</h2>
 				</div>
 				<LocationCarousel />
