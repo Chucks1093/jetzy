@@ -1,14 +1,7 @@
-'use client';
-
-import {
-	Dialog,
-	DialogContent,
-	DialogHeader,
-	DialogTitle,
-} from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useState } from 'react';
+import { Badge } from '@/components/ui/badge';
 
 type Tab = 'all' | 'comments' | 'likes' | 'follows';
 interface NotificationItem {
@@ -25,18 +18,13 @@ interface NotificationItem {
 	isRead: boolean;
 }
 
-interface NotificationProps {
-	open: boolean;
-	onOpenChange: (open: boolean) => void;
-}
-
 const mockNotifications: NotificationItem[] = [
 	{
 		id: '1',
 		type: 'like',
 		user: {
 			name: 'John Doe',
-			initials: 'E',
+			initials: 'J',
 		},
 		action: 'liked your comment',
 		time: '1m',
@@ -53,11 +41,11 @@ const mockNotifications: NotificationItem[] = [
 		action: 'commented on your post',
 		time: '5m',
 		thumbnail: '/images/author.jpeg',
-		isRead: true,
+		isRead: false,
 	},
 ];
 
-export function Notification({ open, onOpenChange }: NotificationProps) {
+export function Notification() {
 	const [notifications, setNotifications] = useState(mockNotifications);
 	const [activeTab, setActiveTab] = useState<Tab>('all');
 
@@ -83,12 +71,23 @@ export function Notification({ open, onOpenChange }: NotificationProps) {
 	});
 
 	return (
-		<Dialog open={open} onOpenChange={onOpenChange}>
-			<DialogContent className="max-w-md w-full p-0 h-[90vh] flex flex-col">
-				<div className="flex flex-col  justify-between h-full max-h-[70vh]">
-					<DialogHeader className="p-4 border-b">
+		<main className="px-5">
+			<div className="w-full p-0  flex flex-col">
+				<div className="flex flex-col  justify-between h-full ">
+					<div className="p-4 border-b">
 						<div className="flex items-center justify-between">
-							<DialogTitle>Notifications</DialogTitle>
+							<div className="flex space-x-2 justify-center items-center">
+								<h1 className="text-2xl font-bold"> Notifications</h1>
+								{unreadCount > 0 && (
+									<Badge
+										variant={'secondary'}
+										className="text-white bg-blue-500  h-fit"
+									>
+										{unreadCount}
+									</Badge>
+								)}
+							</div>
+
 							<Button
 								variant="ghost"
 								size="sm"
@@ -98,7 +97,7 @@ export function Notification({ open, onOpenChange }: NotificationProps) {
 								Mark all as read
 							</Button>
 						</div>
-					</DialogHeader>
+					</div>
 
 					<div className="flex border-b">
 						{tabs.map(tab => (
@@ -188,7 +187,7 @@ export function Notification({ open, onOpenChange }: NotificationProps) {
 						</div>
 					)}
 				</div>
-			</DialogContent>
-		</Dialog>
+			</div>
+		</main>
 	);
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
 	LogOut,
 	Calendar,
@@ -20,8 +20,6 @@ import { NavLink, useNavigate } from 'react-router';
 import authService from '@/services/auth.service';
 import { useProfileStore } from '@/hooks/useProfileStore';
 import showToast from '@/utils/toast.util';
-import { Notification } from '@/pages/Notification';
-
 interface NavigationItem {
 	icon: React.ComponentType<{ className?: string }>;
 	label: string;
@@ -97,7 +95,7 @@ const navigationData: NavigationSection[] = [
 				icon: Bell,
 				label: 'Notifications',
 				id: 'notifications',
-				link: '#',
+				link: '/dasboard/messages/notification',
 			},
 		],
 	},
@@ -138,13 +136,6 @@ const SideBarItem: React.FC<SideBarItemProps> = ({
 	onNavigate,
 	isExpanded,
 }) => {
-	const [open, setOpen] = useState(false);
-
-	const handleNotification = () => {
-		if (label === 'Notifications') {
-			setOpen(true);
-		}
-	};
 	return (
 		<NavLink
 			end
@@ -174,7 +165,6 @@ const SideBarItem: React.FC<SideBarItemProps> = ({
 										? 'text-blue-500'
 										: 'text-gray-700 group-hover:text-gray-900'
 								}`}
-								onClick={handleNotification}
 							>
 								{label}
 							</span>
@@ -196,7 +186,6 @@ const SideBarItem: React.FC<SideBarItemProps> = ({
 							)}
 						</div>
 					)}
-					<Notification open={open} onOpenChange={setOpen} />
 				</>
 			)}
 		</NavLink>

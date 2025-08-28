@@ -4,6 +4,7 @@ import DashboardLayout from './components/dashboard/DashboardLayout';
 import Home from './pages/Home';
 import ChatDetails from './pages/ChatDetails';
 import Explore from './pages/Explore';
+import { Notification } from './pages/Notification';
 
 const router = createBrowserRouter([
 	{
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
 			{
 				path: '/dashboard/explore',
 				element: <Explore />,
+			},
+			{
+				path: '/dasboard/messages/notification',
+				element: <Notification />,
 			},
 		],
 	},
