@@ -43,7 +43,7 @@ const mockNotifications: NotificationItem[] = [
 		message: 'Commented on your post',
 		time: '5m',
 		thumbnail: '/images/author.jpeg',
-		isRead: false,
+		isRead: true,
 	},
 	{
 		id: '3',
@@ -55,7 +55,7 @@ const mockNotifications: NotificationItem[] = [
 		message: 'Commented on your post',
 		time: '5m',
 		thumbnail: '/images/author.jpeg',
-		isRead: true,
+		isRead: false,
 	},
 	{
 		id: '4',
@@ -67,7 +67,7 @@ const mockNotifications: NotificationItem[] = [
 		message: 'Commented on your post',
 		time: '2m',
 		thumbnail: '/images/author.jpeg',
-		isRead: false,
+		isRead: true,
 	},
 ];
 
@@ -120,7 +120,7 @@ export function Notification() {
 							<Button
 								variant="ghost"
 								size="sm"
-								className="text-blue-600 hover:text-blue-700 p-0 h-auto font-normal"
+								className="text-blue-600  p-0  font-normal"
 								onClick={markAllAsRead}
 							>
 								<CheckCheck /> Mark all as read
@@ -140,14 +140,7 @@ export function Notification() {
 								}`}
 							>
 								{tab.charAt(0).toUpperCase() + tab.slice(1)}
-								{tab === 'all' && unreadCount > 0 && (
-									<Badge
-										variant={'secondary'}
-										className="text-gray-900 bg-blue-50  h-fit rounded-md ml-1"
-									>
-										{/* {unreadCount} */}
-									</Badge>
-								)}
+								{tab === 'all' && unreadCount > 0 && ''}
 								{tab === 'likes' &&
 									likesCount > 0 &&
 									// <span className="ml-1">{likesCount}</span>
@@ -158,7 +151,7 @@ export function Notification() {
 
 					<div className="flex-1 overflow-y-auto">
 						{filteredNotifications.length === 0 ? (
-							<div className="flex items-center justify-center h-32 text-muted-foreground">
+							<div className="flex items-center text-red-600 justify-center h-32 ">
 								No notifications
 							</div>
 						) : (
@@ -204,9 +197,9 @@ export function Notification() {
 					{notifications.length > 0 && (
 						<div className="p-4 border-t">
 							<Button
-								variant="ghost"
+								variant={'ghost'}
 								size="sm"
-								className="w-full text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+								className="w-full text-blue-600 "
 								onClick={clearAll}
 							>
 								Clear All

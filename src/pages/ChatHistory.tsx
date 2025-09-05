@@ -117,15 +117,15 @@ export default function TravelChatHistory() {
 							</button>
 							<button
 								onClick={() => setSelectedChats([])}
-								className="px-7 py-2 border-2 border-blue-200 rounded-lg"
+								className="px-7 py-2 border-3 border-blue-200  text-black rounded-lg"
 							>
 								Cancel
 							</button>
 							<button
 								onClick={deleteSelected}
-								className="px-3 py-2 border-3  bg-red-600 text-white rounded-md"
+								className="px-7 py-2 border-3 border-red-600 text-black rounded-lg"
 							>
-								Delete Selected
+								Delete
 							</button>
 						</div>
 					</div>
