@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import ChatDetails from './pages/ChatDetails';
 import Explore from './pages/Explore';
 import { Notification } from './pages/Notification';
+import ChatHistory from './pages/ChatHistory';
 
 const router = createBrowserRouter([
 	{
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
 			{
 				path: '/dasboard/messages/notification',
 				element: <Notification />,
+			},
+			{
+				path: '/dashboard/favorites/history',
+				element: <ChatHistory />,
 			},
 		],
 	},
