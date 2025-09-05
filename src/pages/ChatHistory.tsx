@@ -113,17 +113,17 @@ export default function TravelChatHistory() {
 								onClick={selectAll}
 								className="text-blue-600 hover:underline"
 							>
-								Select all
+								{/* Select all */}
 							</button>
 							<button
 								onClick={() => setSelectedChats([])}
-								className="px-3 py-1 border rounded-lg"
+								className="px-7 py-2 border-2 border-blue-200 rounded-lg"
 							>
 								Cancel
 							</button>
 							<button
 								onClick={deleteSelected}
-								className="px-3 py-1 bg-red-600 text-white rounded-lg"
+								className="px-3 py-2 border-3  bg-red-600 text-white rounded-md"
 							>
 								Delete Selected
 							</button>

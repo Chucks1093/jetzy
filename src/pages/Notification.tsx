@@ -2,7 +2,8 @@ import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useState } from 'react';
 
-import { Bell, CheckCheck } from 'lucide-react';
+import { CheckCheck } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 type Tab = 'all' | 'comments' | 'likes' | 'follows';
 interface NotificationItem {
@@ -96,7 +97,7 @@ export function Notification() {
 	});
 
 	return (
-		<main className="px-5 bg-white h-screen">
+		<main className="px-5 h-screen">
 			<div className="w-full p-0  flex flex-col">
 				<div className="flex flex-col  justify-between h-full ">
 					<div className="p-4 border-b">
@@ -106,15 +107,14 @@ export function Notification() {
 									{' '}
 									Notifications
 								</h1>
-								{/* {unreadCount > 0 && (
+								{unreadCount > 0 && (
 									<Badge
 										variant={'secondary'}
 										className="text-gray-900 bg-blue-50  h-fit"
 									>
-										{unreadCount} <Bell />
+										{unreadCount}
 									</Badge>
-								)} */}
-								<Bell className=" text-blue-600 w-5" width={10} />
+								)}
 							</div>
 
 							<Button
@@ -128,12 +128,12 @@ export function Notification() {
 						</div>
 					</div>
 
-					<div className="flex border-b bg-white">
+					<div className="flex border-b ">
 						{tabs.map(tab => (
 							<button
 								key={tab}
 								onClick={() => setActiveTab(tab)}
-								className={`flex-1 px-4 py-3 text-[14px] text-gray-900  font-semibold border-b-2 transition-colors ${
+								className={`flex-1 px-4 py-3 text-[16px] text-gray-900  font-semibold border-b-2 transition-colors ${
 									activeTab === tab
 										? 'border-blue-500 text-blue-600'
 										: 'border-transparent  hover:text-foreground'
@@ -141,11 +141,17 @@ export function Notification() {
 							>
 								{tab.charAt(0).toUpperCase() + tab.slice(1)}
 								{tab === 'all' && unreadCount > 0 && (
-									<span className="ml-1">{unreadCount}</span>
+									<Badge
+										variant={'secondary'}
+										className="text-gray-900 bg-blue-50  h-fit rounded-md ml-1"
+									>
+										{/* {unreadCount} */}
+									</Badge>
 								)}
-								{tab === 'likes' && likesCount > 0 && (
-									<span className="ml-1">{likesCount}</span>
-								)}
+								{tab === 'likes' &&
+									likesCount > 0 &&
+									// <span className="ml-1">{likesCount}</span>
+									''}
 							</button>
 						))}
 					</div>
@@ -177,11 +183,11 @@ export function Notification() {
 										</Avatar>
 										<div className="flex-1 min-w-0">
 											<p className="text-sm">
-												<span className="font-medium text-black">
+												<span className="font-medium text-blue-500">
 													{notification.user.name}
 												</span>{' '}
 											</p>
-											<p className="text-xs text-muted-foreground mt-1">
+											<p className="text-sm text-gray-900 mt-1">
 												{notification.message}
 											</p>
 										</div>

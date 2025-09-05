@@ -12,6 +12,9 @@ import {
 	FileText,
 	MapPin,
 	ChevronDown,
+	Check,
+	X,
+	LoaderCircle,
 } from 'lucide-react';
 import {
 	Dialog,
@@ -95,11 +98,11 @@ const ActionIcon: React.FC<ActionIconProps> = ({ action }) => {
 	const getImage = () => {
 		switch (action) {
 			case 'plan':
-				return '/gifs/plan-trip.gif'; // Replace with your planning GIF
+				return '/locations/mountain-forest.jpg';
 			case 'book':
-				return '/gifs/book-hotel.gif'; // Replace with your booking GIF
+				return '/locations/china.jpg'; // Replace with your booking GIF
 			default:
-				return '/gifs/plan-trip.gif'; // Default planning GIF
+				return '/locations/beach.jpg'; // Default planning GIF
 		}
 	};
 
@@ -522,6 +525,9 @@ const AISearchInput: React.FC<AISearchInputProps> = props => {
 	const [currentAction, setCurrentAction] = useState<string>('plan'); // Default to plan a trip
 	const inputRef = useRef<HTMLInputElement>(null);
 
+	const [isRecording, setIsRecording] = useState(false);
+	const [loading, setLoading] = useState(false);
+
 	const handleToolAction = (action: string): void => {
 		setCurrentAction(action);
 		// Removed automatic text addition - only changes the action indicator
@@ -584,6 +590,23 @@ const AISearchInput: React.FC<AISearchInputProps> = props => {
 			place.shortName.toLowerCase().includes(mentionQuery.toLowerCase())
 	);
 
+	const toggleRecording = () => {
+		setIsRecording(true);
+	};
+
+	const handleCanceRecording = () => {
+		setLoading(true);
+		setTimeout(() => {
+			setLoading(false);
+			setIsRecording(false);
+		}, 2000);
+	};
+
+	const handleStopRecording = () => {
+		setIsRecording(false);
+		setLoading(false);
+	};
+
 	return (
 		<div
 			className={cn(
@@ -592,52 +615,80 @@ const AISearchInput: React.FC<AISearchInputProps> = props => {
 			)}
 		>
 			<div className="relative w-full rounded-2xl bg-white border border-gray-200 shadow-sm p-4 hover:shadow-md transition-shadow duration-200">
-				<div className="flex-1 mb-6 relative">
-					<InputWithHighlights
-						value={inputValue}
-						onChange={handleInputChange}
-						inputRef={inputRef!}
-						currentAction={currentAction}
-					/>
+				{!isRecording ? (
+					<>
+						<div className="flex-1 mb-6 relative">
+							<InputWithHighlights
+								value={inputValue}
+								onChange={handleInputChange}
+								inputRef={inputRef!}
+								currentAction={currentAction}
+							/>
 
-					<PlacesDropdown
-						filteredPlaces={filteredPlaces}
-						onPlaceSelect={handlePlaceSelect}
-						show={showPlacesDropdown}
-					/>
-				</div>
+							<PlacesDropdown
+								filteredPlaces={filteredPlaces}
+								onPlaceSelect={handlePlaceSelect}
+								show={showPlacesDropdown}
+							/>
+						</div>
 
-				<div className="flex items-center justify-between">
-					<div className="flex items-center gap-3">
-						<FileUploadDialog onContentAdd={handleContentAdd} />
-						<ToolsDropdown
-							onToolAction={handleToolAction}
-							currentAction={currentAction}
-						/>
-						<PlacesPopover onPlaceSelect={handlePlaceSelect} />
-					</div>
+						<div className="flex items-center justify-between">
+							<div className="flex items-center gap-3">
+								<FileUploadDialog onContentAdd={handleContentAdd} />
+								<ToolsDropdown
+									onToolAction={handleToolAction}
+									currentAction={currentAction}
+								/>
+								<PlacesPopover onPlaceSelect={handlePlaceSelect} />
+							</div>
 
-					<div className="flex items-center gap-3">
-						<button
-							type="button"
-							className="rounded-full bg-blue-50 text-blue-600 h-10 w-10 border border-blue-200 flex items-center justify-center hover:bg-blue-100 hover:border-blue-300 transition-all duration-200"
-						>
-							<Mic className="h-4 w-4" />
-						</button>
+							<div className="flex items-center gap-3">
+								<button
+									type="button"
+									onClick={toggleRecording}
+									className="rounded-full bg-blue-50 text-blue-600 h-10 w-10 border border-blue-200 flex items-center justify-center hover:bg-blue-100 hover:border-blue-300 transition-all duration-200"
+								>
+									<Mic className="h-4 w-4" />
+								</button>
 
-						<button
-							type="button"
-							className="rounded-lg bg-gray-800 text-white h-10 w-10 flex items-center justify-center hover:bg-gray-900 transition-colors duration-200 shadow-sm"
-						>
-							<ArrowUp className="h-4 w-4" />
-						</button>
-					</div>
-				</div>
+								<button
+									type="button"
+									className="rounded-lg bg-gray-800 text-white h-10 w-10 flex items-center justify-center hover:bg-gray-900 transition-colors duration-200 shadow-sm"
+								>
+									<ArrowUp className="h-4 w-4" />
+								</button>
+							</div>
+						</div>
+					</>
+				) : (
+					<>
+						<div className="flex items-center justify-between p-4 border-gray-400">
+							<div className="w-full wave-dotted"></div>
+							<div className="flex items-center justify-between gap-4 ml-4">
+								<button
+									onClick={handleStopRecording}
+									disabled={loading}
+									className="hover:bg-blue-50 h-10 hover:border hover:border-blue-300 w-10 flex justify-center items-center hover:rounded-full"
+								>
+									<X className="h-6 w-6 text-gray-500" />
+								</button>
+								<button
+									onClick={handleCanceRecording}
+									className=" hover:bg-blue-50 h-10 hover:border hover:border-blue-300 w-10 flex justify-center items-center hover:rounded-full"
+								>
+									{loading ? (
+										<LoaderCircle className="h-6 w-6 text-gray-500 animate-spin" />
+									) : (
+										<Check className="h-6 w-6 text-gray-500" />
+									)}
+								</button>
+							</div>
+						</div>
+					</>
+				)}
 			</div>
-
 			<ActionButtons />
 		</div>
 	);
 };
-
 export default AISearchInput;

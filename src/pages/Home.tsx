@@ -15,64 +15,64 @@ const LocationCarousel = () => {
 	// New York specific data
 	const data = [
 		{
-			image: '/locations/central-park.jpg',
+			image: '/locations/china.jpg',
 			question: 'What are the best spots to visit in Central Park?',
 			likeCount: 324,
 		},
 		{
-			image: '/locations/brooklyn-bridge.jpg',
+			image: '/locations/mountain-forest.jpg',
 			question: 'Where can I get the best views of the Brooklyn Bridge?',
 			likeCount: 289,
 		},
 		{
-			image: '/locations/times-square.jpg',
+			image: '/locations/water-fall.jpg',
 			question: 'What are the must-see Broadway shows in Times Square?',
 			likeCount: 456,
 		},
 		{
-			image: '/locations/soho-shopping.jpg',
+			image: '/locations/beach-people.jpg',
 			question: 'Where can I find the best vintage shopping in SoHo?',
 			likeCount: 198,
 		},
 		{
-			image: '/locations/chinatown-nyc.jpg',
+			image: '/locations/beach-people.jpg',
 			question: 'What are the most authentic dim sum places in Chinatown?',
 			likeCount: 267,
 		},
 		{
-			image: '/locations/high-line.jpg',
+			image: '/locations/china.jpg',
 			question: 'What are the best photo spots along the High Line?',
 			likeCount: 342,
 		},
 		{
-			image: '/locations/east-village.jpg',
+			image: '/locations/beach-people.jpg',
 			question:
 				'Where can I find the coolest speakeasy bars in East Village?',
 			likeCount: 178,
 		},
 		{
-			image: '/locations/williamsburg.jpg',
+			image: '/locations/china.jpg',
 			question: 'What are the trendiest rooftop bars in Williamsburg?',
 			likeCount: 231,
 		},
 		{
-			image: '/locations/little-italy.jpg',
+			image: '/locations/mountain-forest.jpg',
 			question: 'Which restaurants serve the best pizza in Little Italy?',
 			likeCount: 389,
 		},
 		{
-			image: '/locations/greenwich-village.jpg',
+			image: '/locations/china.jpg',
 			question:
 				'Where can I experience the best jazz clubs in Greenwich Village?',
 			likeCount: 156,
 		},
 		{
-			image: '/locations/chelsea-market.jpg',
+			image: '/locations/beach.jpg',
 			question: 'What are the must-try food vendors at Chelsea Market?',
 			likeCount: 298,
 		},
 		{
-			image: '/locations/statue-liberty.jpg',
+			image: '/locations/water-fall.jpg',
 			question: "What's the best way to visit the Statue of Liberty?",
 			likeCount: 412,
 		},
