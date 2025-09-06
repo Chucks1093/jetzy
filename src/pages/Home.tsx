@@ -15,7 +15,7 @@ const LocationCarousel = () => {
 	// New York specific data
 	const data = [
 		{
-			image: '/locations/central-park.jpg',
+			image: '/locations/high-line.jpg',
 			question: 'What are the best spots to visit in Central Park?',
 			likeCount: 324,
 		},
@@ -25,7 +25,7 @@ const LocationCarousel = () => {
 			likeCount: 289,
 		},
 		{
-			image: '/locations/times-square.jpg',
+			image: '/locations/time-square.jpg',
 			question: 'What are the must-see Broadway shows in Times Square?',
 			likeCount: 456,
 		},
@@ -45,34 +45,34 @@ const LocationCarousel = () => {
 			likeCount: 342,
 		},
 		{
-			image: '/locations/east-village.jpg',
+			image: '/images/image-1.jpg',
 			question:
 				'Where can I find the coolest speakeasy bars in East Village?',
 			likeCount: 178,
 		},
 		{
-			image: '/locations/williamsburg.jpg',
+			image: '/images/image-2.jpg',
 			question: 'What are the trendiest rooftop bars in Williamsburg?',
 			likeCount: 231,
 		},
 		{
-			image: '/locations/little-italy.jpg',
+			image: '/images/image-3.jpg',
 			question: 'Which restaurants serve the best pizza in Little Italy?',
 			likeCount: 389,
 		},
 		{
-			image: '/locations/greenwich-village.jpg',
+			image: '/images/image-4.jpg',
 			question:
 				'Where can I experience the best jazz clubs in Greenwich Village?',
 			likeCount: 156,
 		},
 		{
-			image: '/locations/chelsea-market.jpg',
+			image: '/images/image-5.jpg',
 			question: 'What are the must-try food vendors at Chelsea Market?',
 			likeCount: 298,
 		},
 		{
-			image: '/locations/statue-liberty.jpg',
+			image: '/images/image-7.jpg',
 			question: "What's the best way to visit the Statue of Liberty?",
 			likeCount: 412,
 		},

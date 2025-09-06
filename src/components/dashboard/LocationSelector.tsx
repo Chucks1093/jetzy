@@ -24,63 +24,63 @@ interface Location {
 	fullName: string;
 }
 
-// Sample location data
+// New York locations data
 const locations: Location[] = [
 	{
 		id: '1',
-		name: 'Lagos',
-		region: 'Lagos State',
-		country: 'Nigeria',
-		image: '/locations/beach.jpg',
-		fullName: 'Lagos, Lagos State, Nigeria',
+		name: 'Manhattan',
+		region: 'New York',
+		country: 'United States',
+		image: '/images/image-1.jpg',
+		fullName: 'Manhattan, New York, United States',
 	},
 	{
 		id: '2',
-		name: 'Lagos',
-		region: '',
-		country: 'Portugal',
-		image: '/locations/beach.jpg',
-		fullName: 'Lagos, Portugal',
+		name: 'Brooklyn',
+		region: 'New York',
+		country: 'United States',
+		image: '/images/image-2.jpg',
+		fullName: 'Brooklyn, New York, United States',
 	},
 	{
 		id: '3',
-		name: 'Ikeja',
-		region: 'Lagos State',
-		country: 'Nigeria',
-		image: '/locations/beach.jpg',
-		fullName: 'Ikeja, Lagos State, Nigeria',
+		name: 'Times Square',
+		region: 'Manhattan, NY',
+		country: 'United States',
+		image: '/images/image-3.jpg',
+		fullName: 'Times Square, Manhattan, NY, United States',
 	},
 	{
 		id: '4',
-		name: 'Frutillar',
-		region: 'Los Lagos Region',
-		country: 'Chile',
-		image: '/locations/water-fall.jpg',
-		fullName: 'Frutillar, Los Lagos Region, Chile',
+		name: 'SoHo',
+		region: 'Manhattan, NY',
+		country: 'United States',
+		image: '/images/image-4.jpg',
+		fullName: 'SoHo, Manhattan, NY, United States',
 	},
 	{
 		id: '5',
-		name: 'Osorno',
-		region: 'Los Lagos Region',
-		country: 'Chile',
-		image: '/locations/water-fall.jpg',
-		fullName: 'Osorno, Los Lagos Region, Chile',
+		name: 'Williamsburg',
+		region: 'Brooklyn, NY',
+		country: 'United States',
+		image: '/images/image-5.jpg',
+		fullName: 'Williamsburg, Brooklyn, NY, United States',
 	},
 	{
 		id: '6',
-		name: 'Abuja',
-		region: 'Federal Capital Territory',
-		country: 'Nigeria',
-		image: '/locations/water-fall.jpg',
-		fullName: 'Abuja, Federal Capital Territory, Nigeria',
+		name: 'Central Park',
+		region: 'Manhattan, NY',
+		country: 'United States',
+		image: '/images/image-6.jpg',
+		fullName: 'Central Park, Manhattan, NY, United States',
 	},
 	{
 		id: '7',
-		name: 'Port Harcourt',
-		region: 'Rivers State',
-		country: 'Nigeria',
-		image: '/locations/water-fall.jpg',
-		fullName: 'Port Harcourt, Rivers State, Nigeria',
+		name: 'Queens',
+		region: 'New York',
+		country: 'United States',
+		image: '/images/image-7.jpg',
+		fullName: 'Queens, New York, United States',
 	},
 ];
 
@@ -92,8 +92,8 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({
 	className = '',
 }) => {
 	const [currentLocation, setCurrentLocation] = useState<Location>(
-		locations[2]
-	); // Default to Ikeja
+		locations[0]
+	); // Default to Manhattan
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 
 	const handleLocationSelect = (location: Location): void => {
@@ -120,9 +120,9 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({
 				</PopoverTrigger>
 				<PopoverContent className="w-64 p-0" align="start">
 					<Command>
-						<CommandInput placeholder="Search locations..." />
+						<CommandInput placeholder="Search NYC locations..." />
 						<CommandList>
-							<CommandEmpty>No locations found.</CommandEmpty>
+							<CommandEmpty>No NYC locations found.</CommandEmpty>
 							<CommandGroup>
 								{locations.map(location => (
 									<CommandItem

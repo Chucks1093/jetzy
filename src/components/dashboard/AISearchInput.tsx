@@ -43,46 +43,63 @@ interface Place {
 	shortName: string;
 }
 
-// Data
+// Data - New York Places
 const places: Place[] = [
 	{
 		id: '1',
-		name: 'Eko Hotel And Suites',
-		address:
-			'1415 Adetokunbo Ademola Street, Victoria Island, Lagos 106104, Lagos, Nigeria',
-		image: '/locations/china.jpg',
-		shortName: 'Eko Hotel',
+		name: 'The Plaza Hotel',
+		address: '768 5th Ave, New York, NY 10019, United States',
+		image: '/images/image-1.jpg',
+		shortName: 'The Plaza',
 	},
 	{
 		id: '2',
-		name: 'Radisson Blu Anchorage Hotel',
-		address:
-			'1a Ozumba Mbadiwe Ave, Victoria Island, Lagos 101241, Lagos, Nigeria',
-		image: '/locations/china.jpg',
-		shortName: 'Radisson Anchorage',
+		name: 'The St. Regis New York',
+		address: '2 E 55th St, New York, NY 10022, United States',
+		image: '/images/image-3.jpg',
+		shortName: 'St. Regis',
 	},
 	{
 		id: '3',
-		name: 'Lagos Oriental Hotel',
-		address:
-			'3 Lekki - Epe Expy, Victoria Island, Lagos 106104, Lagos, Nigeria',
-		image: '/locations/china.jpg',
-		shortName: 'Oriental Hotel',
+		name: 'The Ritz-Carlton New York',
+		address: '50 Central Park S, New York, NY 10019, United States',
+		image: '/images/image-5.jpg',
+		shortName: 'Ritz-Carlton',
 	},
 	{
 		id: '4',
-		name: 'Lagos Continental Hotel',
-		address:
-			'52a Kofo Abayomi St, Victoria Island, Lagos 101241, Lagos, Nigeria',
-		image: '/locations/china.jpg',
-		shortName: 'Continental Hotel',
+		name: 'The Standard High Line',
+		address: '848 Washington St, New York, NY 10014, United States',
+		image: '/images/image-6.jpg',
+		shortName: 'Standard High Line',
 	},
 	{
 		id: '5',
-		name: 'Radisson Blu Hotel Lagos Ikeja',
-		address: '38-40 Isaac John St, Ikeja GRA, Lagos 100271, Lagos, Nigeria',
-		image: '/locations/china.jpg',
-		shortName: 'Radisson Ikeja',
+		name: 'The Carlyle Hotel',
+		address: '35 E 76th St, New York, NY 10021, United States',
+		image: '/images/image-7.jpg',
+		shortName: 'The Carlyle',
+	},
+	{
+		id: '6',
+		name: 'Times Square Marriott',
+		address: '1535 Broadway, New York, NY 10036, United States',
+		image: '/images/image-8.jpg',
+		shortName: 'Times Square Marriott',
+	},
+	{
+		id: '7',
+		name: 'The High Line Hotel',
+		address: '180 10th Ave, New York, NY 10011, United States',
+		image: '/images/image-9.jpg',
+		shortName: 'High Line Hotel',
+	},
+	{
+		id: '8',
+		name: 'Pod Brooklyn',
+		address: '247 Metropolitan Ave, Brooklyn, NY 11211, United States',
+		image: '/images/image-10.jpg',
+		shortName: 'Pod Brooklyn',
 	},
 ];
 
@@ -95,11 +112,11 @@ const ActionIcon: React.FC<ActionIconProps> = ({ action }) => {
 	const getImage = () => {
 		switch (action) {
 			case 'plan':
-				return '/gifs/plan-trip.gif'; // Replace with your planning GIF
+				return '/gifs/plan-trip.gif';
 			case 'book':
-				return '/gifs/book-hotel.gif'; // Replace with your booking GIF
+				return '/gifs/book-hotel.gif';
 			default:
-				return '/gifs/plan-trip.gif'; // Default planning GIF
+				return '/gifs/plan-trip.gif';
 		}
 	};
 
@@ -288,11 +305,11 @@ const ToolsDropdown: React.FC<ToolsDropdownProps> = ({
 	const getActionLabel = (action: string) => {
 		switch (action) {
 			case 'plan':
-				return 'Plan a trip';
+				return 'Plan NYC trip';
 			case 'book':
-				return 'Book a hotel';
+				return 'Book hotel';
 			default:
-				return 'Plan a trip';
+				return 'Plan NYC trip';
 		}
 	};
 
@@ -316,14 +333,14 @@ const ToolsDropdown: React.FC<ToolsDropdownProps> = ({
 					className="cursor-pointer"
 				>
 					<MapPin className="h-4 w-4 mr-2" />
-					Plan a trip
+					Plan NYC trip
 				</DropdownMenuItem>
 				<DropdownMenuItem
 					onClick={() => onToolAction('book')}
 					className="cursor-pointer"
 				>
 					<Hotel className="h-4 w-4 mr-2" />
-					Book a hotel
+					Book hotel
 				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
@@ -365,14 +382,16 @@ const PlacesPopover: React.FC<PlacesPopoverProps> = ({ onPlaceSelect }) => (
 				className="flex items-center gap-1 bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 hover:bg-gray-100 transition-colors duration-200"
 			>
 				<Search className="h-4 w-4 text-gray-500" />
-				<span className="text-gray-700 text-sm font-medium">Places</span>
+				<span className="text-gray-700 text-sm font-medium">
+					NYC Places
+				</span>
 			</button>
 		</PopoverTrigger>
 		<PopoverContent className="w-[80%] p-0" align="start">
 			<div className="max-h-80 overflow-y-auto">
 				<div className="p-2 border-b border-gray-100">
 					<p className="text-xs text-gray-500 px-2">
-						Select a place or type @ in the input
+						Select a NYC place or type @ in the input
 					</p>
 				</div>
 				{places.map(place => (
@@ -412,7 +431,7 @@ const PlacesDropdown: React.FC<PlacesDropdownProps> = ({
 				))
 			) : (
 				<div className="p-3 text-center text-gray-500 text-sm">
-					No places found
+					No NYC places found
 				</div>
 			)}
 		</div>
@@ -431,7 +450,7 @@ const InputWithHighlights: React.FC<InputWithHighlightsProps> = ({
 	value,
 	onChange,
 	inputRef,
-	placeholder = 'How can I help you today?',
+	placeholder = 'Plan your perfect New York experience...',
 	currentAction,
 }) => {
 	const parts = value.split(/(@\w+)/g);
@@ -490,21 +509,21 @@ const ActionButtons: React.FC = () => (
 			className="flex items-center gap-2 text-gray-600 rounded-lg border border-gray-200 text-sm px-4 py-2.5 bg-white hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 transition-all duration-200 shadow-sm"
 		>
 			<Compass className="h-4 w-4" />
-			Wonder
+			Explore
 		</button>
 		<button
 			type="button"
 			className="flex items-center gap-2 text-gray-600 rounded-lg border border-gray-200 text-sm px-4 py-2.5 bg-white hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 transition-all duration-200 shadow-sm"
 		>
 			<Utensils className="h-4 w-4" />
-			Eat
+			Dine
 		</button>
 		<button
 			type="button"
 			className="flex items-center gap-2 text-gray-600 rounded-lg border border-gray-200 text-sm px-4 py-2.5 bg-white hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 transition-all duration-200 shadow-sm"
 		>
 			<Hotel className="h-4 w-4" />
-			Hotels
+			Stay
 		</button>
 	</div>
 );
@@ -519,12 +538,11 @@ const AISearchInput: React.FC<AISearchInputProps> = props => {
 	const [showPlacesDropdown, setShowPlacesDropdown] = useState<boolean>(false);
 	const [cursorPosition, setCursorPosition] = useState<number>(0);
 	const [mentionQuery, setMentionQuery] = useState<string>('');
-	const [currentAction, setCurrentAction] = useState<string>('plan'); // Default to plan a trip
+	const [currentAction, setCurrentAction] = useState<string>('plan');
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	const handleToolAction = (action: string): void => {
 		setCurrentAction(action);
-		// Removed automatic text addition - only changes the action indicator
 	};
 
 	const handleContentAdd = (content: string): void => {
