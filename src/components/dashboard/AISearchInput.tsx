@@ -33,6 +33,7 @@ import {
 	PopoverTrigger,
 } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
+import { useNavigate } from 'react-router';
 
 // Types
 interface Place {
@@ -155,6 +156,17 @@ const ActionIcon: React.FC<ActionIconProps> = ({ action }) => {
 		</div>
 	);
 };
+
+// Recording Indicator Component
+const RecordingIndicator: React.FC = () => (
+	<div className="flex items-center gap-3 px-4 py-2 bg-red-50 border border-red-200 rounded-full">
+		<div className="relative">
+			<div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+			<div className="absolute inset-0 w-3 h-3 bg-red-400 rounded-full animate-ping opacity-75"></div>
+		</div>
+		<span className="text-red-700 text-sm font-medium">Recording</span>
+	</div>
+);
 
 interface FileUploadDialogProps {
 	onContentAdd: (content: string) => void;
@@ -539,7 +551,9 @@ const AISearchInput: React.FC<AISearchInputProps> = props => {
 	const [cursorPosition, setCursorPosition] = useState<number>(0);
 	const [mentionQuery, setMentionQuery] = useState<string>('');
 	const [currentAction, setCurrentAction] = useState<string>('plan');
+	const [isRecording, setIsRecording] = useState<boolean>(false);
 	const inputRef = useRef<HTMLInputElement>(null);
+	const navigate = useNavigate();
 
 	const handleToolAction = (action: string): void => {
 		setCurrentAction(action);
@@ -547,6 +561,18 @@ const AISearchInput: React.FC<AISearchInputProps> = props => {
 
 	const handleContentAdd = (content: string): void => {
 		setInputValue(prev => prev + content);
+	};
+
+	const handleStartRecording = (): void => {
+		setIsRecording(true);
+		// Add your recording logic here
+		console.log('Recording started');
+	};
+
+	const handleStopRecording = (): void => {
+		setIsRecording(false);
+		// Add your stop recording logic here
+		console.log('Recording stopped');
 	};
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -571,6 +597,10 @@ const AISearchInput: React.FC<AISearchInputProps> = props => {
 		} else {
 			setShowPlacesDropdown(false);
 		}
+	};
+
+	const handleSumbit = () => {
+		navigate('/chat/234243');
 	};
 
 	const handlePlaceSelect = (place: Place): void => {
@@ -610,49 +640,69 @@ const AISearchInput: React.FC<AISearchInputProps> = props => {
 			)}
 		>
 			<div className="relative w-full rounded-2xl bg-white border border-gray-200 shadow-sm p-4 hover:shadow-md transition-shadow duration-200">
-				<div className="flex-1 mb-6 relative">
-					<InputWithHighlights
-						value={inputValue}
-						onChange={handleInputChange}
-						inputRef={inputRef!}
-						currentAction={currentAction}
-					/>
-
-					<PlacesDropdown
-						filteredPlaces={filteredPlaces}
-						onPlaceSelect={handlePlaceSelect}
-						show={showPlacesDropdown}
-					/>
-				</div>
-
-				<div className="flex items-center justify-between">
-					<div className="flex items-center gap-3">
-						<FileUploadDialog onContentAdd={handleContentAdd} />
-						<ToolsDropdown
-							onToolAction={handleToolAction}
+				<>
+					<div className="flex-1 mb-6 relative">
+						<InputWithHighlights
+							value={inputValue}
+							onChange={handleInputChange}
+							inputRef={inputRef!}
 							currentAction={currentAction}
 						/>
-						<PlacesPopover onPlaceSelect={handlePlaceSelect} />
+
+						<PlacesDropdown
+							filteredPlaces={filteredPlaces}
+							onPlaceSelect={handlePlaceSelect}
+							show={showPlacesDropdown}
+						/>
 					</div>
 
-					<div className="flex items-center gap-3">
-						<button
-							type="button"
-							className="rounded-full bg-blue-50 text-blue-600 h-10 w-10 border border-blue-200 flex items-center justify-center hover:bg-blue-100 hover:border-blue-300 transition-all duration-200"
-						>
-							<Mic className="h-4 w-4" />
-						</button>
+					<div className="flex items-center justify-between">
+						<div className="flex items-center gap-3">
+							<FileUploadDialog onContentAdd={handleContentAdd} />
+							<ToolsDropdown
+								onToolAction={handleToolAction}
+								currentAction={currentAction}
+							/>
+							<PlacesPopover onPlaceSelect={handlePlaceSelect} />
+						</div>
 
-						<button
-							type="button"
-							className="rounded-lg bg-gray-800 text-white h-10 w-10 flex items-center justify-center hover:bg-gray-900 transition-colors duration-200 shadow-sm"
-						>
-							<ArrowUp className="h-4 w-4" />
-						</button>
+						<div className="flex items-center gap-3">
+							{/* Recording Indicator - show when recording */}
+							{isRecording && <RecordingIndicator />}
+
+							{/* Mic Button - show only when not recording */}
+							{!isRecording && (
+								<button
+									type="button"
+									onClick={handleStartRecording}
+									className="rounded-full bg-blue-50 text-blue-600 h-10 w-10 border border-blue-200 flex items-center justify-center hover:bg-blue-100 hover:border-blue-300 transition-all duration-200"
+								>
+									<Mic className="h-4 w-4" />
+								</button>
+							)}
+
+							{/* Send/Stop Button */}
+							<button
+								type="button"
+								onClick={
+									isRecording ? handleStopRecording : handleSumbit
+								}
+								className={`rounded-lg h-10 w-10 flex items-center justify-center transition-colors duration-200 shadow-sm ${
+									isRecording
+										? 'bg-red-600 hover:bg-red-700 text-white'
+										: 'bg-gray-800 hover:bg-gray-900 text-white'
+								}`}
+							>
+								{isRecording ? (
+									<div className="w-3 h-3 bg-white rounded-sm"></div>
+								) : (
+									<ArrowUp className="h-4 w-4" />
+								)}
+							</button>
+						</div>
 					</div>
-				</div>
+				</>
 			</div>
-
 			<ActionButtons />
 		</div>
 	);

@@ -20,7 +20,7 @@ const LocationCarousel = () => {
 			likeCount: 324,
 		},
 		{
-			image: '/locations/brooklyn-bridge.jpg',
+			image: '/locations/soho-shopping.jpg',
 			question: 'Where can I get the best views of the Brooklyn Bridge?',
 			likeCount: 289,
 		},
@@ -30,17 +30,17 @@ const LocationCarousel = () => {
 			likeCount: 456,
 		},
 		{
-			image: '/locations/soho-shopping.jpg',
+			image: '/locations/chinatown-nyc.jpg',
 			question: 'Where can I find the best vintage shopping in SoHo?',
 			likeCount: 198,
 		},
 		{
-			image: '/locations/chinatown-nyc.jpg',
+			image: '/locations/brooklyn-bridge.jpg',
 			question: 'What are the most authentic dim sum places in Chinatown?',
 			likeCount: 267,
 		},
 		{
-			image: '/locations/high-line.jpg',
+			image: '/locations/chinatown-nyc.jpg',
 			question: 'What are the best photo spots along the High Line?',
 			likeCount: 342,
 		},

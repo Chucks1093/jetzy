@@ -1,6 +1,8 @@
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useState } from 'react';
+
+import { CheckCheck } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
 type Tab = 'all' | 'comments' | 'likes' | 'follows';
@@ -12,7 +14,7 @@ interface NotificationItem {
 		avatar?: string;
 		initials: string;
 	};
-	action: string;
+	message: string;
 	time: string;
 	thumbnail?: string;
 	isRead: boolean;
@@ -23,10 +25,10 @@ const mockNotifications: NotificationItem[] = [
 		id: '1',
 		type: 'like',
 		user: {
-			name: 'John Doe',
+			name: 'Henry Doe',
 			initials: 'J',
 		},
-		action: 'liked your comment',
+		message: 'Liked your comment',
 		time: '1m',
 		thumbnail: '/images/author.jpeg',
 		isRead: false,
@@ -38,10 +40,34 @@ const mockNotifications: NotificationItem[] = [
 			name: 'Sarah Johnson',
 			initials: 'S',
 		},
-		action: 'commented on your post',
+		message: 'Commented on your post',
+		time: '5m',
+		thumbnail: '/images/author.jpeg',
+		isRead: true,
+	},
+	{
+		id: '3',
+		type: 'comment',
+		user: {
+			name: 'Harry Johnson',
+			initials: 'S',
+		},
+		message: 'Commented on your post',
 		time: '5m',
 		thumbnail: '/images/author.jpeg',
 		isRead: false,
+	},
+	{
+		id: '4',
+		type: 'comment',
+		user: {
+			name: 'William Smith',
+			initials: 'S',
+		},
+		message: 'Commented on your post',
+		time: '2m',
+		thumbnail: '/images/author.jpeg',
+		isRead: true,
 	},
 ];
 
@@ -71,17 +97,20 @@ export function Notification() {
 	});
 
 	return (
-		<main className="px-5">
+		<main className="px-5 h-screen">
 			<div className="w-full p-0  flex flex-col">
 				<div className="flex flex-col  justify-between h-full ">
 					<div className="p-4 border-b">
 						<div className="flex items-center justify-between">
 							<div className="flex space-x-2 justify-center items-center">
-								<h1 className="text-2xl font-bold"> Notifications</h1>
+								<h1 className="text-2xl font-bold text-gray-900">
+									{' '}
+									Notifications
+								</h1>
 								{unreadCount > 0 && (
 									<Badge
 										variant={'secondary'}
-										className="text-white bg-blue-500  h-fit"
+										className="text-gray-900 bg-blue-50  h-fit"
 									>
 										{unreadCount}
 									</Badge>
@@ -91,39 +120,38 @@ export function Notification() {
 							<Button
 								variant="ghost"
 								size="sm"
-								className="text-blue-600 hover:text-blue-700 p-0 h-auto font-normal"
+								className="text-blue-600  p-0  font-normal"
 								onClick={markAllAsRead}
 							>
-								Mark all as read
+								<CheckCheck /> Mark all as read
 							</Button>
 						</div>
 					</div>
 
-					<div className="flex border-b">
+					<div className="flex border-b ">
 						{tabs.map(tab => (
 							<button
 								key={tab}
 								onClick={() => setActiveTab(tab)}
-								className={`flex-1 px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
+								className={`flex-1 px-4 py-3 text-[16px] text-gray-900  font-semibold border-b-2 transition-colors ${
 									activeTab === tab
 										? 'border-blue-500 text-blue-600'
-										: 'border-transparent text-muted-foreground hover:text-foreground'
+										: 'border-transparent  hover:text-foreground'
 								}`}
 							>
 								{tab.charAt(0).toUpperCase() + tab.slice(1)}
-								{tab === 'all' && unreadCount > 0 && (
-									<span className="ml-1">{unreadCount}</span>
-								)}
-								{tab === 'likes' && likesCount > 0 && (
-									<span className="ml-1">{likesCount}</span>
-								)}
+								{tab === 'all' && unreadCount > 0 && ''}
+								{tab === 'likes' &&
+									likesCount > 0 &&
+									// <span className="ml-1">{likesCount}</span>
+									''}
 							</button>
 						))}
 					</div>
 
 					<div className="flex-1 overflow-y-auto">
 						{filteredNotifications.length === 0 ? (
-							<div className="flex items-center justify-center h-32 text-muted-foreground">
+							<div className="flex items-center text-red-600 justify-center h-32 ">
 								No notifications
 							</div>
 						) : (
@@ -131,15 +159,15 @@ export function Notification() {
 								{filteredNotifications.map(notification => (
 									<div
 										key={notification.id}
-										className={`flex items-center gap-3 p-4 hover:bg-muted/50 transition-colors ${
+										className={`flex items-center border-b-1 gap-3 p-4 hover:bg-muted/50 transition-colors ${
 											!notification.isRead ? 'bg-blue-50/50' : ''
 										}`}
 									>
 										<Avatar className="w-10 h-10">
 											<AvatarImage
 												src={
-													notification.user.avatar ||
-													'/placeholder.svg'
+													notification.thumbnail ||
+													'//images/author.jpeg'
 												}
 											/>
 											<AvatarFallback className="bg-purple-600 text-white text-sm">
@@ -148,26 +176,18 @@ export function Notification() {
 										</Avatar>
 										<div className="flex-1 min-w-0">
 											<p className="text-sm">
-												<span className="font-medium">
+												<span className="font-medium text-blue-500">
 													{notification.user.name}
 												</span>{' '}
-												<span className="text-muted-foreground">
-													{notification.action}
-												</span>
 											</p>
-											<p className="text-xs text-muted-foreground mt-1">
-												{notification.time}
+											<p className="text-sm text-gray-900 mt-1">
+												{notification.message}
 											</p>
 										</div>
-										{notification.thumbnail && (
-											<div className="w-10 h-10 rounded overflow-hidden flex-shrink-0">
-												<img
-													src={notification.thumbnail}
-													alt=""
-													className="w-full h-full object-cover"
-												/>
-											</div>
-										)}
+
+										<p className=" text-sm text-muted-foreground">
+											{notification.time}
+										</p>
 									</div>
 								))}
 							</div>
@@ -177,9 +197,9 @@ export function Notification() {
 					{notifications.length > 0 && (
 						<div className="p-4 border-t">
 							<Button
-								variant="ghost"
+								variant={'ghost'}
 								size="sm"
-								className="w-full text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+								className="w-full text-blue-600 "
 								onClick={clearAll}
 							>
 								Clear All
