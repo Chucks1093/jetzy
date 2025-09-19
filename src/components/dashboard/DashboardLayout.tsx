@@ -1,6 +1,7 @@
 import SideBar from './Sidebar';
 import { Outlet } from 'react-router';
 import { useState } from 'react';
+import { Menu } from 'lucide-react';
 
 function DashboardLayout() {
 	const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Mobile sidebar state
@@ -25,7 +26,7 @@ function DashboardLayout() {
 				{/* Mobile overlay */}
 				{isSidebarOpen && (
 					<div
-						className="fixed inset-0 bg-black bg-opacity-50 z-40"
+						className="fixed inset-0 bg-black opacity-50 z-40"
 						onClick={closeMobileSidebar}
 					/>
 				)}
@@ -44,6 +45,32 @@ function DashboardLayout() {
 
 				{/* Mobile Content - Full width since no header */}
 				<div className="min-h-screen">
+					<header className="h-[9vh] border-b bg-white flex items-center justify-between p-4">
+						{' '}
+						<button
+							onClick={toggleMobileSidebar}
+							className="p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200 flex-shrink-0"
+						>
+							<Menu className="size-6 text-gray-600" />
+						</button>
+						<div className="flex items-center gap-2">
+							<div className="bg-slate-800 flex items-center justify-center p-2 rounded-full">
+								<img
+									src="/icons/logo.svg"
+									alt="Nora AI Logo"
+									className="h-4 w-4"
+									onError={e => {
+										e.currentTarget.style.display = 'none';
+										e.currentTarget.parentElement!.innerHTML =
+											'<span class="text-white font-bold text-sm">J</span>';
+									}}
+								/>
+							</div>
+							<h2 className="font-semibold text-lg text-gray-900 font-montserrat">
+								Jetzy
+							</h2>
+						</div>
+					</header>
 					<main className="min-h-screen bg-[#f8fafe] overflow-auto">
 						<Outlet />
 					</main>

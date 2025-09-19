@@ -47,7 +47,7 @@ export const FormInput: React.FC<FormInputProps> = ({
 	const inputId = id || label.toLowerCase().replace(/\s+/g, '-');
 	const hasError = error && touched;
 
-	const baseInputStyles = `
+	const baseInputStyles = cn(`
 		w-full px-4 py-2 border-none rounded-md transition-colors duration-200 outline-none
 		focus:ring-0 focus:ring-blue-500  h-14
 		placeholder:text-gray-400 
@@ -58,9 +58,9 @@ export const FormInput: React.FC<FormInputProps> = ({
 				: 'border-gray-300 focus:border-blue-500'
 		}
 		${inputClassName}
-	`;
+	`);
 
-	const containerStyles = `
+	const containerStyles = cn(`
 		relative flex items-center w-full border ring-0  rounded-md transition-colors duration-200  
 		${
 			hasError
@@ -69,7 +69,7 @@ export const FormInput: React.FC<FormInputProps> = ({
 		}
 		${disabled ? 'bg-gray-100 cursor-not-allowed' : 'bg-white'}
 		${wrapperClassName}
-	`;
+	`);
 
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -87,7 +87,7 @@ export const FormInput: React.FC<FormInputProps> = ({
 			maxLength,
 			autoComplete,
 			className: cn(
-				'file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-green-400/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
+				'file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-green-400/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-md',
 
 				'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive placeholder:text-gray-200',
 				baseInputStyles

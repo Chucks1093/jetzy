@@ -34,7 +34,7 @@ const TabTriggers: React.FC<TabTriggersProps> = ({ tabs, className }) => {
 						disabled={tab.disabled}
 					>
 						{Icon && <Icon className="size-6" />}
-						<span className="font-medium text-xs">{tab.label}</span>
+						<span className="font-medium text-sm">{tab.label}</span>
 						{hasCount && (
 							<span className="flex items-center justify-center font-medium text-gray-500 group-data-[state=active]:text-blue-600 p-1 px-3 rounded-full bg-gray-200 group-data-[state=active]:bg-blue-200">
 								{tab.count}

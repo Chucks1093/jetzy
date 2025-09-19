@@ -12,6 +12,7 @@ import {
 	FileText,
 	MapPin,
 	ChevronDown,
+	Loader2,
 } from 'lucide-react';
 import {
 	Dialog,
@@ -34,6 +35,7 @@ import {
 } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
 import { useNavigate } from 'react-router';
+import FormInput from '../shared/FormInput';
 
 // Types
 interface Place {
@@ -74,34 +76,6 @@ const places: Place[] = [
 		image: '/images/image-6.jpg',
 		shortName: 'Standard High Line',
 	},
-	{
-		id: '5',
-		name: 'The Carlyle Hotel',
-		address: '35 E 76th St, New York, NY 10021, United States',
-		image: '/images/image-7.jpg',
-		shortName: 'The Carlyle',
-	},
-	{
-		id: '6',
-		name: 'Times Square Marriott',
-		address: '1535 Broadway, New York, NY 10036, United States',
-		image: '/images/image-8.jpg',
-		shortName: 'Times Square Marriott',
-	},
-	{
-		id: '7',
-		name: 'The High Line Hotel',
-		address: '180 10th Ave, New York, NY 10011, United States',
-		image: '/images/image-9.jpg',
-		shortName: 'High Line Hotel',
-	},
-	{
-		id: '8',
-		name: 'Pod Brooklyn',
-		address: '247 Metropolitan Ave, Brooklyn, NY 11211, United States',
-		image: '/images/image-10.jpg',
-		shortName: 'Pod Brooklyn',
-	},
 ];
 
 // Components
@@ -113,22 +87,11 @@ const ActionIcon: React.FC<ActionIconProps> = ({ action }) => {
 	const getImage = () => {
 		switch (action) {
 			case 'plan':
-				return '/gifs/plan-trip.gif';
+				return '/icons/hills.svg';
 			case 'book':
-				return '/gifs/book-hotel.gif';
+				return '/icons/city.svg';
 			default:
-				return '/gifs/plan-trip.gif';
-		}
-	};
-
-	const getAltText = () => {
-		switch (action) {
-			case 'plan':
-				return 'Planning a trip';
-			case 'book':
-				return 'Booking a hotel';
-			default:
-				return 'Planning a trip';
+				return '/icons/plan-trip.gif';
 		}
 	};
 
@@ -145,26 +108,44 @@ const ActionIcon: React.FC<ActionIconProps> = ({ action }) => {
 
 	return (
 		<div
-			className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-50 border border-gray-200 flex-shrink-0 overflow-hidden"
+			className="flex items-center justify-center w-9 h-9 rounded-full bg-gray-50 border border-gray-200 flex-shrink-0 overflow-hidden"
 			title={getTooltip()}
 		>
 			<img
 				src={getImage()}
-				alt={getAltText()}
-				className="w-8 h-8 rounded-full object-cover"
+				alt={getTooltip()}
+				className="size-7 rounded-full object-cover"
 			/>
 		</div>
 	);
 };
 
-// Recording Indicator Component
-const RecordingIndicator: React.FC = () => (
-	<div className="flex items-center gap-3 px-4 py-2 bg-red-50 border border-red-200 rounded-full">
-		<div className="relative">
-			<div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
-			<div className="absolute inset-0 w-3 h-3 bg-red-400 rounded-full animate-ping opacity-75"></div>
+// Enhanced Recording Indicator
+const RecordingIndicator: React.FC<{ duration: number }> = ({ duration }) => {
+	const formatTime = (seconds: number) => {
+		const mins = Math.floor(seconds / 60);
+		const secs = seconds % 60;
+		return `${mins}:${secs.toString().padStart(2, '0')}`;
+	};
+
+	return (
+		<div className="flex items-center gap-2 px-3 py-1.5 bg-red-50 border border-red-200 rounded-full">
+			<div className="relative">
+				<div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+				<div className="absolute inset-0 w-2 h-2 bg-red-400 rounded-full animate-ping opacity-75"></div>
+			</div>
+			<span className="text-red-700 text-xs font-medium">
+				Recording {formatTime(duration)}
+			</span>
 		</div>
-		<span className="text-red-700 text-sm font-medium">Recording</span>
+	);
+};
+
+// Processing Indicator
+const ProcessingIndicator: React.FC = () => (
+	<div className="flex items-center gap-2 px-3 py-1.5 bg-blue-50 border border-blue-200 rounded-full">
+		<Loader2 className="w-3 h-3 text-blue-600 animate-spin" />
+		<span className="text-blue-700 text-xs font-medium">Processing...</span>
 	</div>
 );
 
@@ -231,12 +212,12 @@ const FileUploadDialog: React.FC<FileUploadDialogProps> = ({
 			<DialogTrigger asChild>
 				<button
 					type="button"
-					className="rounded-lg h-9 w-9 border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-50 hover:border-gray-300 transition-all duration-200"
+					className="h-9 w-9 rounded-lg border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 active:scale-95"
 				>
 					<Plus className="h-4 w-4" />
 				</button>
 			</DialogTrigger>
-			<DialogContent className="sm:max-w-sm">
+			<DialogContent>
 				<DialogHeader>
 					<DialogTitle>Add Content</DialogTitle>
 					<DialogDescription>Upload a file or add a URL</DialogDescription>
@@ -317,11 +298,11 @@ const ToolsDropdown: React.FC<ToolsDropdownProps> = ({
 	const getActionLabel = (action: string) => {
 		switch (action) {
 			case 'plan':
-				return 'Plan NYC trip';
+				return 'Plan trip';
 			case 'book':
 				return 'Book hotel';
 			default:
-				return 'Plan NYC trip';
+				return 'Plan trip';
 		}
 	};
 
@@ -330,22 +311,22 @@ const ToolsDropdown: React.FC<ToolsDropdownProps> = ({
 			<DropdownMenuTrigger asChild>
 				<button
 					type="button"
-					className="flex items-center gap-1 bg-white border border-gray-200 rounded-lg px-3 py-2 hover:bg-gray-100 transition-colors duration-200"
+					className="flex items-center gap-1 bg-white border border-gray-200 rounded-lg px-3 h-9 hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 active:scale-95"
 				>
 					<Settings2 className="h-4 w-4 text-gray-500" />
-					<span className="text-gray-700 text-sm font-medium">
+					<span className="text-gray-700 text-sm font-medium hidden sm:block">
 						{getActionLabel(currentAction)}
 					</span>
 					<ChevronDown className="h-3 w-3 text-gray-500" />
 				</button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent align="start" className="w-48">
+			<DropdownMenuContent align="start" className="w-40">
 				<DropdownMenuItem
 					onClick={() => onToolAction('plan')}
 					className="cursor-pointer"
 				>
 					<MapPin className="h-4 w-4 mr-2" />
-					Plan NYC trip
+					Plan trip
 				</DropdownMenuItem>
 				<DropdownMenuItem
 					onClick={() => onToolAction('book')}
@@ -373,11 +354,13 @@ const PlaceItem: React.FC<PlaceItemProps> = ({ place, onClick }) => (
 		<img
 			src={place.image}
 			alt={place.name}
-			className="w-12 h-12 rounded-lg object-cover flex-shrink-0"
+			className="w-10 h-10 rounded-lg object-cover flex-shrink-0"
 		/>
 		<div className="flex-1 min-w-0">
-			<h4 className="font-medium text-gray-900 truncate">{place.name}</h4>
-			<p className="text-sm text-gray-500 line-clamp-2">{place.address}</p>
+			<h4 className="font-medium text-gray-900 truncate text-sm">
+				{place.name}
+			</h4>
+			<p className="text-xs text-gray-500 truncate">{place.address}</p>
 		</div>
 	</button>
 );
@@ -391,19 +374,19 @@ const PlacesPopover: React.FC<PlacesPopoverProps> = ({ onPlaceSelect }) => (
 		<PopoverTrigger asChild>
 			<button
 				type="button"
-				className="flex items-center gap-1 bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 hover:bg-gray-100 transition-colors duration-200"
+				className="flex items-center gap-1 bg-gray-50 border border-gray-200 rounded-lg px-3 h-9 hover:bg-gray-100 hover:border-gray-300 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 active:scale-95"
 			>
 				<Search className="h-4 w-4 text-gray-500" />
-				<span className="text-gray-700 text-sm font-medium">
-					NYC Places
+				<span className="text-gray-700 text-sm font-medium hidden sm:block">
+					Places
 				</span>
 			</button>
 		</PopoverTrigger>
-		<PopoverContent className="w-[80%] p-0" align="start">
-			<div className="max-h-80 overflow-y-auto">
-				<div className="p-2 border-b border-gray-100">
-					<p className="text-xs text-gray-500 px-2">
-						Select a NYC place or type @ in the input
+		<PopoverContent className="w-80 p-0" align="start">
+			<div className="max-h-64 overflow-y-auto">
+				<div className="p-3 border-b border-gray-100">
+					<p className="text-xs text-gray-500">
+						Select a place or type @ in the input
 					</p>
 				</div>
 				{places.map(place => (
@@ -418,124 +401,28 @@ const PlacesPopover: React.FC<PlacesPopoverProps> = ({ onPlaceSelect }) => (
 	</Popover>
 );
 
-interface PlacesDropdownProps {
-	filteredPlaces: Place[];
-	onPlaceSelect: (place: Place) => void;
-	show: boolean;
-}
-
-const PlacesDropdown: React.FC<PlacesDropdownProps> = ({
-	filteredPlaces,
-	onPlaceSelect,
-	show,
-}) => {
-	if (!show) return null;
-
-	return (
-		<div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-64 overflow-y-auto z-50 ml-[52px]">
-			{filteredPlaces.length > 0 ? (
-				filteredPlaces.map(place => (
-					<PlaceItem
-						key={place.id}
-						place={place}
-						onClick={onPlaceSelect}
-					/>
-				))
-			) : (
-				<div className="p-3 text-center text-gray-500 text-sm">
-					No NYC places found
-				</div>
-			)}
-		</div>
-	);
-};
-
-interface InputWithHighlightsProps {
-	value: string;
-	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-	inputRef: React.RefObject<HTMLInputElement | null>;
-	placeholder?: string;
-	currentAction: string;
-}
-
-const InputWithHighlights: React.FC<InputWithHighlightsProps> = ({
-	value,
-	onChange,
-	inputRef,
-	placeholder = 'Plan your perfect New York experience...',
-	currentAction,
-}) => {
-	const parts = value.split(/(@\w+)/g);
-
-	return (
-		<div className="relative w-full flex items-center gap-3">
-			<ActionIcon action={currentAction} />
-
-			<div className="relative flex-1">
-				<div className="absolute inset-0 flex items-center pointer-events-none text-lg">
-					{parts.map((part, index) => (
-						<span
-							key={index}
-							className={
-								part.startsWith('@')
-									? 'text-blue-600 font-medium'
-									: 'text-transparent'
-							}
-						>
-							{part}
-						</span>
-					))}
-				</div>
-				<input
-					ref={inputRef}
-					type="text"
-					value={value}
-					onChange={onChange}
-					placeholder={placeholder}
-					className="w-full text-lg text-gray-800 placeholder-gray-500 bg-transparent border-none outline-none focus:placeholder-gray-400 transition-colors relative z-10"
-					style={{ color: 'transparent' }}
-				/>
-				<div className="absolute inset-0 flex items-center pointer-events-none text-lg">
-					{parts.map((part, index) => (
-						<span
-							key={index}
-							className={
-								part.startsWith('@')
-									? 'text-blue-600 font-medium'
-									: 'text-gray-800'
-							}
-						>
-							{part}
-						</span>
-					))}
-				</div>
-			</div>
-		</div>
-	);
-};
-
-const ActionButtons: React.FC = () => (
-	<div className="flex justify-center gap-4 mt-6">
+const QuickActions: React.FC = () => (
+	<div className="flex justify-center gap-3 mt-6">
 		<button
 			type="button"
-			className="flex items-center gap-2 text-gray-600 rounded-lg border border-gray-200 text-sm px-4 py-2.5 bg-white hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 transition-all duration-200 shadow-sm"
+			className="flex items-center gap-2 text-gray-600 rounded-lg border border-gray-200 text-sm px-4 py-2.5 bg-white hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 transition-all duration-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 active:scale-95"
 		>
 			<Compass className="h-4 w-4" />
-			Explore
+			<span className="hidden sm:inline">Explore</span>
 		</button>
 		<button
 			type="button"
-			className="flex items-center gap-2 text-gray-600 rounded-lg border border-gray-200 text-sm px-4 py-2.5 bg-white hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 transition-all duration-200 shadow-sm"
+			className="flex items-center gap-2 text-gray-600 rounded-lg border border-gray-200 text-sm px-4 py-2.5 bg-white hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 transition-all duration-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 active:scale-95"
 		>
 			<Utensils className="h-4 w-4" />
-			Dine
+			<span className="hidden sm:inline">Dine</span>
 		</button>
 		<button
 			type="button"
-			className="flex items-center gap-2 text-gray-600 rounded-lg border border-gray-200 text-sm px-4 py-2.5 bg-white hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 transition-all duration-200 shadow-sm"
+			className="flex items-center gap-2 text-gray-600 rounded-lg border border-gray-200 text-sm px-4 py-2.5 bg-white hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 transition-all duration-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 active:scale-95"
 		>
 			<Hotel className="h-4 w-4" />
-			Stay
+			<span className="hidden sm:inline">Stay</span>
 		</button>
 	</div>
 );
@@ -547,13 +434,13 @@ type AISearchInputProps = {
 // Main Component
 const AISearchInput: React.FC<AISearchInputProps> = props => {
 	const [inputValue, setInputValue] = useState<string>('');
-	const [showPlacesDropdown, setShowPlacesDropdown] = useState<boolean>(false);
-	const [cursorPosition, setCursorPosition] = useState<number>(0);
-	const [mentionQuery, setMentionQuery] = useState<string>('');
 	const [currentAction, setCurrentAction] = useState<string>('plan');
 	const [isRecording, setIsRecording] = useState<boolean>(false);
+	const [isProcessing, setIsProcessing] = useState<boolean>(false);
+	const [recordingDuration, setRecordingDuration] = useState<number>(0);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const navigate = useNavigate();
+	const recordingTimer = useRef<NodeJS.Timeout | null>(null);
 
 	const handleToolAction = (action: string): void => {
 		setCurrentAction(action);
@@ -563,101 +450,118 @@ const AISearchInput: React.FC<AISearchInputProps> = props => {
 		setInputValue(prev => prev + content);
 	};
 
+	const startRecordingTimer = () => {
+		setRecordingDuration(0);
+		recordingTimer.current = setInterval(() => {
+			setRecordingDuration(prev => prev + 1);
+		}, 1000);
+	};
+
+	const stopRecordingTimer = () => {
+		if (recordingTimer.current) {
+			clearInterval(recordingTimer.current);
+			recordingTimer.current = null;
+		}
+		setRecordingDuration(0);
+	};
+
 	const handleStartRecording = (): void => {
 		setIsRecording(true);
-		// Add your recording logic here
+		startRecordingTimer();
 		console.log('Recording started');
 	};
 
-	const handleStopRecording = (): void => {
+	const handleStopRecording = async (): Promise<void> => {
 		setIsRecording(false);
-		// Add your stop recording logic here
-		console.log('Recording stopped');
-	};
+		stopRecordingTimer();
+		setIsProcessing(true);
 
-	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-		const value = e.target.value;
-		const position = e.target.selectionStart || 0;
+		try {
+			// Simulate API call for voice processing
+			console.log('Processing voice recording...');
+			await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate API delay
 
-		setInputValue(value);
-		setCursorPosition(position);
+			// Generate a random chat ID
+			const chatId = Math.random().toString(36).substring(2, 15);
 
-		// Check for @ mention
-		const beforeCursor = value.substring(0, position);
-		const atIndex = beforeCursor.lastIndexOf('@');
-
-		if (atIndex !== -1) {
-			const afterAt = beforeCursor.substring(atIndex + 1);
-			if (!afterAt.includes(' ')) {
-				setMentionQuery(afterAt);
-				setShowPlacesDropdown(true);
-			} else {
-				setShowPlacesDropdown(false);
-			}
-		} else {
-			setShowPlacesDropdown(false);
+			console.log('Voice processed, navigating to chat...');
+			navigate(`/chat/${chatId}`);
+		} catch (error) {
+			console.error('Error processing recording:', error);
+		} finally {
+			setIsProcessing(false);
 		}
 	};
 
-	const handleSumbit = () => {
-		navigate('/chat/234243');
+	const handleInputChange = (value: string) => {
+		setInputValue(value);
+	};
+
+	const handleSubmit = () => {
+		if (inputValue.trim()) {
+			const chatId = Math.random().toString(36).substring(2, 15);
+			navigate(`/chat/${chatId}`);
+		}
 	};
 
 	const handlePlaceSelect = (place: Place): void => {
-		const beforeCursor = inputValue.substring(0, cursorPosition);
-		const afterCursor = inputValue.substring(cursorPosition);
-		const atIndex = beforeCursor.lastIndexOf('@');
-
-		if (atIndex !== -1) {
-			const beforeAt = beforeCursor.substring(0, atIndex);
-			const newValue = `${beforeAt}@${place.shortName}${afterCursor}`;
-			setInputValue(newValue);
-		} else {
-			setInputValue(
-				prev => prev + (prev ? ' ' : '') + `@${place.shortName}`
-			);
-		}
-
-		setShowPlacesDropdown(false);
-		setMentionQuery('');
-
+		setInputValue(prev => prev + (prev ? ' ' : '') + `@${place.shortName}`);
 		setTimeout(() => {
 			inputRef.current?.focus();
 		}, 100);
 	};
 
-	const filteredPlaces = places.filter(
-		place =>
-			place.name.toLowerCase().includes(mentionQuery.toLowerCase()) ||
-			place.shortName.toLowerCase().includes(mentionQuery.toLowerCase())
-	);
+	// Disable controls during recording or processing
+	const isDisabled = isRecording || isProcessing;
 
 	return (
-		<div
-			className={cn(
-				'flex flex-col items-center w-full max-w-2xl mx-auto mt-8',
-				props.className
-			)}
-		>
-			<div className="relative w-full rounded-2xl bg-white border border-gray-200 shadow-sm p-4 hover:shadow-md transition-shadow duration-200">
-				<>
-					<div className="flex-1 mb-6 relative">
-						<InputWithHighlights
-							value={inputValue}
-							onChange={handleInputChange}
-							inputRef={inputRef!}
-							currentAction={currentAction}
-						/>
+		<div className="space-y-6">
+			<div className={cn('max-w-3xl mx-auto', props.className)}>
+				<div
+					className={cn(
+						'bg-white p-3 rounded-2xl border shadow-sm overflow-hidden transition-all duration-200',
+						isRecording &&
+							'border-red-300 bg-red-50/30 shadow-lg shadow-red-100',
+						isProcessing && 'border-blue-300 bg-blue-50/30',
+						!isRecording &&
+							!isProcessing &&
+							'focus-within:ring-2 focus-within:ring-gray-200 focus-within:ring-offset-2 border-gray-200'
+					)}
+				>
+					{/* Recording/Processing Banner */}
+					{(isRecording || isProcessing) && (
+						<div className="mb-3 flex justify-center">
+							{isRecording && (
+								<RecordingIndicator duration={recordingDuration} />
+							)}
+							{isProcessing && <ProcessingIndicator />}
+						</div>
+					)}
 
-						<PlacesDropdown
-							filteredPlaces={filteredPlaces}
-							onPlaceSelect={handlePlaceSelect}
-							show={showPlacesDropdown}
-						/>
-					</div>
+					<FormInput
+						prefix={
+							<div className="text-gray-400 ">
+								<ActionIcon action={currentAction} />
+							</div>
+						}
+						value={inputValue}
+						placeholder={
+							isRecording
+								? 'Listening... speak your travel plans'
+								: isProcessing
+								? 'Processing your request...'
+								: 'Plan your perfect travel experience...'
+						}
+						onChange={handleInputChange}
+						inputClassName="shadow-none border-none focus:ring-0"
+						wrapperClassName="border-none focus-within:ring-0"
+						label=""
+						disabled={isDisabled}
+					/>
 
-					<div className="flex items-center justify-between">
-						<div className="flex items-center gap-3">
+					<div className="flex items-center justify-between pt-2">
+						{/* Left side controls */}
+						<div className="flex items-center gap-2">
 							<FileUploadDialog onContentAdd={handleContentAdd} />
 							<ToolsDropdown
 								onToolAction={handleToolAction}
@@ -666,44 +570,65 @@ const AISearchInput: React.FC<AISearchInputProps> = props => {
 							<PlacesPopover onPlaceSelect={handlePlaceSelect} />
 						</div>
 
-						<div className="flex items-center gap-3">
-							{/* Recording Indicator - show when recording */}
-							{isRecording && <RecordingIndicator />}
-
-							{/* Mic Button - show only when not recording */}
-							{!isRecording && (
-								<button
-									type="button"
-									onClick={handleStartRecording}
-									className="rounded-full bg-blue-50 text-blue-600 h-10 w-10 border border-blue-200 flex items-center justify-center hover:bg-blue-100 hover:border-blue-300 transition-all duration-200"
-								>
-									<Mic className="h-4 w-4" />
-								</button>
-							)}
-
-							{/* Send/Stop Button */}
+						{/* Right side controls */}
+						<div className="flex items-center gap-2">
 							<button
 								type="button"
 								onClick={
-									isRecording ? handleStopRecording : handleSumbit
-								}
-								className={`rounded-lg h-10 w-10 flex items-center justify-center transition-colors duration-200 shadow-sm ${
 									isRecording
-										? 'bg-red-600 hover:bg-red-700 text-white'
-										: 'bg-gray-800 hover:bg-gray-900 text-white'
-								}`}
+										? handleStopRecording
+										: handleStartRecording
+								}
+								disabled={isProcessing}
+								className={cn(
+									'h-9 w-9 rounded-lg border flex items-center justify-center transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-1 active:scale-95',
+									isRecording
+										? 'bg-red-100 border-red-300 text-red-600 hover:bg-red-200 focus:ring-red-500 animate-pulse'
+										: 'bg-blue-50 border-blue-200 text-blue-600 hover:bg-blue-100 focus:ring-blue-500',
+									isProcessing && 'opacity-50 cursor-not-allowed'
+								)}
 							>
 								{isRecording ? (
-									<div className="w-3 h-3 bg-white rounded-sm"></div>
+									<div className="w-3 h-3 bg-red-600 rounded-sm"></div>
+								) : (
+									<Mic className="h-4 w-4" />
+								)}
+							</button>
+
+							<button
+								type="button"
+								onClick={handleSubmit}
+								disabled={
+									!inputValue.trim() || isRecording || isProcessing
+								}
+								className="h-9 w-9 rounded-lg bg-gray-800 hover:bg-gray-900 disabled:bg-gray-300 text-white flex items-center justify-center transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-1 active:scale-95 disabled:cursor-not-allowed"
+							>
+								{isProcessing ? (
+									<Loader2 className="h-4 w-4 animate-spin" />
 								) : (
 									<ArrowUp className="h-4 w-4" />
 								)}
 							</button>
 						</div>
 					</div>
-				</>
+				</div>
+
+				{/* Status Message */}
+				{isRecording && (
+					<p className="text-center text-sm text-red-600  mt-3">
+						Listening to your travel plans... Click the stop button when
+						finished
+					</p>
+				)}
+				{isProcessing && (
+					<p className="text-center text-sm text-blue-600 mt-3">
+						Processing your request and creating your personalized travel
+						chat...
+					</p>
+				)}
 			</div>
-			<ActionButtons />
+
+			<QuickActions />
 		</div>
 	);
 };

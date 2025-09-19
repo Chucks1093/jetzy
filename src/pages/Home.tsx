@@ -79,7 +79,7 @@ const LocationCarousel = () => {
 	];
 
 	return (
-		<div className=" py-8 px-4 w-[90%] mx-auto">
+		<div className=" py-8 md:px-4 max-w-[67rem] mx-auto">
 			<Carousel
 				opts={{
 					align: 'start',
@@ -94,7 +94,10 @@ const LocationCarousel = () => {
 			>
 				<CarouselContent className="-ml-2 md:-ml-4">
 					{data.map((item, index) => (
-						<CarouselItem key={index} className="pl-2 md:pl-4 basis-1/4">
+						<CarouselItem
+							key={index}
+							className="pl-2 md:pl-4 basis-1/1 md:basis-1/4"
+						>
 							<LocationCard {...item} />
 						</CarouselItem>
 					))}
@@ -109,19 +112,19 @@ const LocationCarousel = () => {
 function Home() {
 	return (
 		<motion.div
-			className="max-w-7xl mx-auto p-6 pt-10  h-full flex items-center justify-center"
+			className="max-w-7xl mx-auto px-6 pt-10  h-full flex items-center justify-center relative"
 			initial={{ opacity: 0, y: 30 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.6, ease: 'easeOut' }}
 		>
-			<LocationSelector className="absolute top-10 right-10" />
-			<div className="w-full relative top-[5%]">
-				<div className="flex items-center justify-center gap-3">
-					<div className="bg-slate-800 flex items-center justify-center p-3 border border-white rounded-full w-fit">
+			<LocationSelector className="absolute top-5 right-5" />
+			<div className="w-full relative top-[5%] ">
+				<div className="flex flex-col md:flex-row mt-14 md:mt-0 items-center justify-center  gap-3">
+					<div className="bg-slate-800 md:flex items-center justify-center p-3 border border-white rounded-full w-fit hidden">
 						<img
 							src="/icons/logo.svg"
 							alt="Nora AI Logo"
-							className="h-7 w-7"
+							className="md:size-6 size-4"
 							onError={e => {
 								// Fallback to text if image fails to load
 								e.currentTarget.style.display = 'none';
@@ -130,12 +133,12 @@ function Home() {
 							}}
 						/>
 					</div>
-					<h2 className=" text-[2.2rem] font-medium text-gray-900 font-montserrat tracking-tight">
+					<h2 className=" text-2xl md:text-[2.4rem] md:font-medium font-semibold text-gray-600 font-montserrat  tracking-tight text-center">
 						Discover New York City Now.
 					</h2>
 				</div>
 				<LocationCarousel />
-				<AISearchInput />
+				<AISearchInput className="mt-8" />
 			</div>
 		</motion.div>
 	);

@@ -6,13 +6,13 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Search, ListFilter, CirclePlus, ChevronDown } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Search, ListFilter, ChevronDown, Map, Plus } from 'lucide-react';
 import { useState } from 'react';
 import FormInput from '@/components/shared/FormInput';
 import TabTriggers from '@/components/shared/TabTriggers';
 import TravelPostCard from '@/components/dashboard/TravelPostCard';
 import { Tabs } from '@/components/ui/tabs';
+
 const travelPosts = [
 	{
 		id: '1',
@@ -171,22 +171,22 @@ const travelPosts = [
 const CityFilters = () => {
 	return (
 		<TabTriggers
-			className=" mx-auto"
+			className=""
 			tabs={[
 				{
-					value: 'applicant',
+					value: 'all',
 					label: 'All',
 				},
 				{
-					value: 'business',
+					value: 'new-yourk',
 					label: 'New York',
 				},
 				{
-					value: 'collateral',
+					value: 'los-angeles',
 					label: 'Los Angeles',
 				},
 				{
-					value: 'documents',
+					value: 'san-francisco',
 					label: 'San Francisco',
 				},
 			]}
@@ -219,7 +219,7 @@ export function SearchHeader() {
 		</div>
 	);
 	return (
-		<div className=" flex items-center relative justify-end pb-5">
+		<div className=" flex items-center justify-between relative gap-5  pb-5">
 			<FormInput
 				label=""
 				value={searchQuery}
@@ -227,12 +227,12 @@ export function SearchHeader() {
 				placeholder="Search travel tips, posts and more"
 				prefix={<SearchIcon />}
 				inputClassName="h-13"
-				className="absolute left-1/2 -translate-x-1/2 w-full max-w-[40rem] "
-				wrapperClassName="px-3 rounded-lg shadow-lg border-gray-400"
+				className=" w-full max-w-2xl "
+				wrapperClassName="px-3 rounded-lg border-gray-300"
 			/>
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild>
-					<button className="hidden md:inline-flex items-center px-4 py-2.5 text-sm  font-medium text-center text-gray-700 bg-white border border-gray-300 rounded-sm hover:bg-gray-50 focus:ring-4 focus:outline-none focus:ring-gray-100 h-[2.8rem]">
+					<button className="hidden md:inline-flex items-center px-5 py-2.5 text-sm  font-medium text-center text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:ring-4 focus:outline-none focus:ring-gray-100 h-full ml-auto ">
 						<ListFilter className="w-4 h-4 mr-2 -ml-1 text-gray-500" />
 						{getFilterDisplayText()}
 						<ChevronDown className="w-4 h-4 ml-2 text-gray-500" />
@@ -285,30 +285,31 @@ export function SearchHeader() {
 					</DropdownMenuItem>
 				</DropdownMenuContent>
 			</DropdownMenu>
+			<button className="bg-gray-600 hover:bg-gray-700 active:bg-gray-800 disabled:bg-gray-300 disabled:cursor-not-allowed font-medium px-6 py-3 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 flex items-center gap-2 text-zinc-100">
+				<Plus />
+				Add Post
+			</button>
 		</div>
 	);
 }
 
 export default function Explore() {
 	return (
-		<div className="h-screen flex flex-col">
-			<Tabs className="py-8 space-y-1 px-4">
+		<div className="h-screen bg-[#faf9f6] text-gray-900 max-w-6xl mx-auto pt-13 px-4 flex flex-col relative">
+			<div className="flex gap-2 items-center mb-2">
+				<Map className="size-7" />
+				<h1 className="text-2xl font-manrope font-medium text-zinc-600">
+					Explore Locations Near you
+				</h1>
+			</div>
+			<Tabs className="mt-4 space-y-1 " defaultValue="all">
 				<SearchHeader />
 				<CityFilters />
 			</Tabs>
-			<div className="px-4 flex-1 overflow-y-scroll grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto py-5">
+			<div className="px-4 flex-1 overflow-y-scroll grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto py-5 mt-5">
 				{travelPosts.map(post => (
 					<TravelPostCard key={post.id} post={post} />
 				))}
-			</div>
-			<div className=" absolute  z-50 bottom-32 left-1/2 right-1/2 ">
-				<Button
-					size="lg"
-					className="fixed bottom-10  border-3 outline-8 bg-black border-white py-5 px-12"
-				>
-					<CirclePlus className="w-4 h-4 mr-1" />
-					Add Post
-				</Button>
 			</div>
 		</div>
 	);

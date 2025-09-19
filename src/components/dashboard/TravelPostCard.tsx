@@ -44,11 +44,11 @@ export default function TravelPostCard({ post }: TravelPostCardProps) {
 						<CarouselContent>
 							{post.images.map((image, index) => (
 								<CarouselItem key={index}>
-									<div className="aspect-square overflow-hidden h-[15rem] w-full">
+									<div className="aspect-square overflow-hidden h-[15rem] w-full rounded-t-lg">
 										<img
 											src={image}
 											alt={`Review image ${index + 1}`}
-											className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-200 rounded-t-lg"
+											className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-200 "
 										/>
 									</div>
 								</CarouselItem>
@@ -65,7 +65,7 @@ export default function TravelPostCard({ post }: TravelPostCardProps) {
 			)}
 
 			<div className="p-4">
-				<h3 className="font-medium text-lg text-zinc-700 font-grotesque  text-balance mb-3 line-clamp-2">
+				<h3 className="font-medium text-lg text-zinc-700 font-grotesque  text-balance mb-3 line-clamp-2 h-[4rem] text-ellipsis">
 					{post.title}
 				</h3>
 
@@ -92,7 +92,7 @@ export default function TravelPostCard({ post }: TravelPostCardProps) {
 						>
 							<Heart
 								className={`size-5 stroke-0 ${
-									isLiked ? 'fill-red-500 text-primary' : ''
+									isLiked ? 'fill-red-500 text-primary' : 'stroke-1'
 								}`}
 							/>
 							<span className="text-sm">{likeCount}</span>
