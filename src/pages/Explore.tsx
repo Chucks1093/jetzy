@@ -1,271 +1,314 @@
-import { Input } from '@/components/ui/input';
 import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from '@/components/ui/select';
-import { Search, ListFilter, CirclePlus } from 'lucide-react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Card, CardContent } from '@/components/ui/card';
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuLabel,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Search, ListFilter, CirclePlus, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Heart, MessageCircle } from 'lucide-react';
 import { useState } from 'react';
-
+import FormInput from '@/components/shared/FormInput';
+import TabTriggers from '@/components/shared/TabTriggers';
+import TravelPostCard from '@/components/dashboard/TravelPostCard';
+import { Tabs } from '@/components/ui/tabs';
 const travelPosts = [
 	{
 		id: '1',
-		title: 'Art and Hiking Adventure in Portland',
-		image: '/images/explore.webp',
+		title: 'Amazing sunset views from Brooklyn Bridge',
+		images: ['/images/image-1.jpg', '/images/image-3.jpg'],
 		author: {
-			name: 'John Doe',
-			avatar: '/images/author.jpeg',
-			username: 'William Doe',
+			name: 'Sarah Chen',
+			avatar: '/avatars/avatar-5.png',
+			username: 'sarahexplores',
 		},
-		likes: 0,
-		comments: 0,
-		isLiked: false,
+		likes: 1247,
+		comments: 89,
+		isLiked: true,
+		showAddButton: true,
 	},
 	{
 		id: '2',
-		title: "Brooklyn's Hidden Thai gem ",
-		image: '/images/explore.webp',
+		title: 'Central Park in fall colors - absolutely breathtaking!',
+		images: [
+			'/images/image-4.jpg',
+			'/images/image-5.jpg',
+			'/images/image-6.jpg',
+		],
 		author: {
-			name: 'Amelia Sofia',
-			avatar: '/images/author.jpeg',
-			username: 'Amelia Sofia',
+			name: 'Mike Rodriguez',
+			avatar: '/avatars/avatar-12.png',
+			username: 'mikeontour',
 		},
-		likes: 9,
-		comments: 2,
+		likes: 892,
+		comments: 156,
 		isLiked: false,
+		showAddButton: false,
 	},
 	{
 		id: '3',
-		title: 'Singapore JEM',
-		image: '/images/explore.webp',
+		title: 'Times Square at midnight - the city never sleeps',
+		images: ['/images/image-8.jpg'],
 		author: {
-			name: 'Ciera',
-			avatar: '/images/author.jpeg',
-			username: 'Ciera',
+			name: 'Emma Thompson',
+			avatar: '/avatars/avatar-23.png',
+			username: 'emmawanders',
 		},
-		likes: 43,
-		comments: 2,
+		likes: 2341,
+		comments: 203,
 		isLiked: true,
 	},
 	{
 		id: '4',
-		title: 'Hidden Gems in San Francisco Bay Area',
-		image: '/images/explore.webp',
+		title: 'Best pizza slice in Little Italy - found this hidden gem!',
+		images: ['/images/image-7.jpg', '/images/image-1.jpg'],
 		author: {
-			name: 'Explorer',
-			avatar: '/images/author.jpeg',
-			username: 'explorer',
+			name: 'Alex Kim',
+			avatar: '/avatars/avatar-7.png',
+			username: 'alexeats',
 		},
-		likes: 15,
-		comments: 5,
-		isLiked: false,
+		likes: 567,
+		comments: 78,
 	},
 	{
 		id: '5',
-		title: 'Winter Wonderland Adventures',
-		image: '/images/explore.webp',
+		title: 'High Line walk during golden hour',
+		images: [
+			'/images/image-3.jpg',
+			'/images/image-4.jpg',
+			'/images/image-5.jpg',
+		],
 		author: {
-			name: 'Adventure Seeker',
-			avatar: '/images/author.jpeg',
-			username: 'adventureseeker',
+			name: 'Jessica Park',
+			avatar: '/avatars/avatar-18.png',
+			username: 'jessexplores',
 		},
-		likes: 28,
-		comments: 8,
+		likes: 1834,
+		comments: 124,
 		isLiked: false,
 		showAddButton: true,
 	},
 	{
 		id: '6',
-		title: 'Authentic Japanese Ramen Experience',
-		image: '/images/explore.webp',
+		title: 'Statue of Liberty ferry ride on a perfect morning',
+		images: ['/images/image-6.jpg', '/images/image-7.jpg'],
 		author: {
-			name: 'Foodie Explorer',
-			avatar: '/images/author.jpeg',
-			username: 'foodieexplorer',
+			name: 'David Wilson',
+			avatar: '/avatars/avatar-3.png',
+			username: 'davidnyc',
 		},
-		likes: 67,
-		comments: 12,
+		likes: 934,
+		comments: 67,
 		isLiked: true,
+		showAddButton: false,
+	},
+	{
+		id: '7',
+		title: 'SoHo shopping district vibes',
+		images: [
+			'/images/image-9.jpg',
+			'/images/image-2.jpg',
+			'/images/image-8.jpg',
+		],
+		author: {
+			name: 'Olivia Martinez',
+			avatar: '/avatars/avatar-29.png',
+			username: 'oliviastyle',
+		},
+		likes: 1456,
+		comments: 213,
+		isLiked: false,
+	},
+	{
+		id: '8',
+		title: 'Manhattan skyline from Roosevelt Island tram',
+		images: ['/images/image-1.jpg'],
+		author: {
+			name: 'James Foster',
+			avatar: '/avatars/avatar-14.png',
+			username: 'jamesviews',
+		},
+		likes: 2089,
+		comments: 178,
+		isLiked: true,
+		showAddButton: true,
+	},
+	{
+		id: '9',
+		title: "Street art in Williamsburg - Brooklyn's creative heart",
+		images: ['/images/image-2.jpg', '/images/image-3.jpg'],
+		author: {
+			name: 'Maya Patel',
+			avatar: '/avatars/avatar-21.png',
+			username: 'mayaartist',
+		},
+		likes: 723,
+		comments: 95,
+		isLiked: false,
+		showAddButton: false,
+	},
+	{
+		id: '10',
+		title: '9/11 Memorial - a place of reflection and remembrance',
+		images: [
+			'/images/image-2.jpg',
+			'/images/image-4.jpg',
+			'/images/image-7.jpg',
+		],
+		author: {
+			name: 'Robert Chen',
+			avatar: '/avatars/avatar-31.png',
+			username: 'robertremembers',
+		},
+		likes: 3421,
+		comments: 289,
+		isLiked: true,
+		showAddButton: true,
 	},
 ];
 
-export function SearchHeader() {
+const CityFilters = () => {
 	return (
-		<div className="w-full max-w-4xl mx-auto space-y-4">
-			<div className="flex gap-3">
-				<div className="relative flex-1">
-					<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-5" />
-					<Input
-						placeholder="Search travel tips, posts and more"
-						className="pl-10 bg-background outline-none "
-					/>
-				</div>
-				<Select defaultValue="all">
-					<SelectTrigger className="w-40 bg-white border-border">
-						<ListFilter className="w-4 h-4 mr-2" />
-						<SelectValue placeholder="Type: All" />
-					</SelectTrigger>
-					<SelectContent>
-						<SelectItem value="all">Type: All</SelectItem>
-						<SelectItem value="post">Post</SelectItem>
-						<SelectItem value="adventure">Itinerary</SelectItem>
-					</SelectContent>
-				</Select>
-			</div>
+		<TabTriggers
+			className=" mx-auto"
+			tabs={[
+				{
+					value: 'applicant',
+					label: 'All',
+				},
+				{
+					value: 'business',
+					label: 'New York',
+				},
+				{
+					value: 'collateral',
+					label: 'Los Angeles',
+				},
+				{
+					value: 'documents',
+					label: 'San Francisco',
+				},
+			]}
+		/>
+	);
+};
+
+export function SearchHeader() {
+	const [searchQuery, setSearchQuery] = useState('');
+	const [statusFilter, setStatusFilter] = useState('all');
+	const getFilterDisplayText = () => {
+		switch (statusFilter) {
+			case 'verified':
+				return 'Verified';
+			case 'review':
+				return 'Under Review';
+			case 'unaccepted':
+				return 'Unaccepted';
+			default:
+				return 'All status';
+		}
+	};
+
+	const handleStatusFilterChange = (status: string) => {
+		setStatusFilter(status);
+	};
+	const SearchIcon = () => (
+		<div className="text-gray-400 ">
+			<Search className="size-5" />
 		</div>
 	);
-}
-
-const cities = [
-	'All',
-	'New York',
-	'Los Angeles',
-	'San Francisco',
-	'Tokyo',
-	'London',
-	'Paris',
-	'Rome',
-];
-
-export function CityFilters() {
-	const [activeCity, setActiveCity] = useState('All');
-
 	return (
-		<div className="w-full max-w-4xl mx-auto">
-			<div className="flex gap-2 overflow-x-auto pb-2">
-				{cities.map(city => (
-					<Button
-						key={city}
-						variant={activeCity === city ? 'default' : 'outline'}
-						size="sm"
-						onClick={() => setActiveCity(city)}
-						className={`whitespace-nowrap ${
-							activeCity === city
-								? 'bg-primary text-sm text-primary-foreground hover:bg-primary/90'
-								: ' border-border text-sm hover:bg-accent'
+		<div className=" flex items-center relative justify-end pb-5">
+			<FormInput
+				label=""
+				value={searchQuery}
+				onChange={value => setSearchQuery(value)}
+				placeholder="Search travel tips, posts and more"
+				prefix={<SearchIcon />}
+				inputClassName="h-13"
+				className="absolute left-1/2 -translate-x-1/2 w-full max-w-[40rem] "
+				wrapperClassName="px-3 rounded-lg shadow-lg border-gray-400"
+			/>
+			<DropdownMenu>
+				<DropdownMenuTrigger asChild>
+					<button className="hidden md:inline-flex items-center px-4 py-2.5 text-sm  font-medium text-center text-gray-700 bg-white border border-gray-300 rounded-sm hover:bg-gray-50 focus:ring-4 focus:outline-none focus:ring-gray-100 h-[2.8rem]">
+						<ListFilter className="w-4 h-4 mr-2 -ml-1 text-gray-500" />
+						{getFilterDisplayText()}
+						<ChevronDown className="w-4 h-4 ml-2 text-gray-500" />
+					</button>
+				</DropdownMenuTrigger>
+				<DropdownMenuContent align="start" className="w-48">
+					<DropdownMenuLabel className="text-xs font-medium text-gray-500 uppercase">
+						Status
+					</DropdownMenuLabel>
+					<DropdownMenuSeparator />
+					<DropdownMenuItem
+						onClick={() => handleStatusFilterChange('all')}
+						className={`cursor-pointer ${
+							statusFilter === 'all'
+								? 'bg-gray-100 text-gray-900'
+								: 'text-gray-700'
 						}`}
 					>
-						{city}
-					</Button>
-				))}
-			</div>
+						All
+					</DropdownMenuItem>
+					<DropdownMenuItem
+						onClick={() => handleStatusFilterChange('verified')}
+						className={`cursor-pointer ${
+							statusFilter === 'verified'
+								? 'bg-gray-100 text-gray-900'
+								: 'text-gray-700'
+						}`}
+					>
+						Verified
+					</DropdownMenuItem>
+					<DropdownMenuItem
+						onClick={() => handleStatusFilterChange('review')}
+						className={`cursor-pointer ${
+							statusFilter === 'review'
+								? 'bg-gray-100 text-gray-900'
+								: 'text-gray-700'
+						}`}
+					>
+						Under Review
+					</DropdownMenuItem>
+					<DropdownMenuItem
+						onClick={() => handleStatusFilterChange('unaccepted')}
+						className={`cursor-pointer ${
+							statusFilter === 'unaccepted'
+								? 'bg-gray-100 text-gray-900'
+								: 'text-gray-700'
+						}`}
+					>
+						Unaccepted
+					</DropdownMenuItem>
+				</DropdownMenuContent>
+			</DropdownMenu>
 		</div>
-	);
-}
-
-interface TravelPost {
-	id: string;
-	title: string;
-	image: string;
-	author: {
-		name: string;
-		avatar: string;
-		username: string;
-	};
-	likes: number;
-	comments: number;
-	isLiked?: boolean;
-	showAddButton?: boolean;
-}
-
-interface TravelPostCardProps {
-	post: TravelPost;
-}
-
-export function TravelPostCard({ post }: TravelPostCardProps) {
-	const [isLiked, setIsLiked] = useState(post.isLiked || false);
-	const [likeCount, setLikeCount] = useState(post.likes);
-
-	const handleLike = () => {
-		setIsLiked(!isLiked);
-		setLikeCount(prev => (isLiked ? prev - 1 : prev + 1));
-	};
-
-	return (
-		<Card className="group p overflow-hidden transition-all duration-300 pt-0 hover:shadow-lg hover:scale-[1.02] border-border ">
-			<div className="relative">
-				<img
-					src={post.image || '/placeholder.svg'}
-					alt={post.title}
-					className="w-full h-48 object-cover"
-				/>
-			</div>
-			<CardContent className="">
-				<h3 className="font-semibold text-card-foreground text-balance mb-3 line-clamp-2">
-					{post.title}
-				</h3>
-				<div className="flex items-center justify-between">
-					<div className="flex items-center gap-2">
-						<Avatar className="w-8 h-8">
-							<AvatarImage
-								src={post.author.avatar || '/placeholder.svg'}
-								alt={post.author.name}
-							/>
-							<AvatarFallback>
-								{post.author.name.charAt(0)}
-							</AvatarFallback>
-						</Avatar>
-						<span className="text-sm text-muted-foreground">
-							{post.author.username}
-						</span>
-					</div>
-					<div className="flex items-center gap-3">
-						<Button
-							variant="ghost"
-							size="sm"
-							onClick={handleLike}
-							className="flex items-center gap-1 text-muted-foreground hover:text-primary"
-						>
-							<Heart
-								className={`w-4 h-4 ${
-									isLiked ? 'fill-primary text-primary' : ''
-								}`}
-							/>
-							<span className="text-sm">{likeCount}</span>
-						</Button>
-						<Button
-							variant="ghost"
-							size="sm"
-							className="flex items-center gap-1 text-muted-foreground hover:text-primary"
-						>
-							<MessageCircle className="w-4 h-4" />
-							<span className="text-sm">{post.comments}</span>
-						</Button>
-					</div>
-				</div>
-			</CardContent>
-		</Card>
 	);
 }
 
 export default function Explore() {
 	return (
-		<div className="min-h-screen">
-			<div className="container mx-auto px-4 py-8 space-y-8">
-				<div className=" absolute  z-50 bottom-32 left-1/2 right-1/2 ">
-					<Button
-						size="lg"
-						className="fixed bottom-10  border-3 outline-8 bg-black border-white py-5 px-12"
-					>
-						<CirclePlus className="w-4 h-4 mr-1" />
-						Add Post
-					</Button>
-				</div>
-
+		<div className="h-screen flex flex-col">
+			<Tabs className="py-8 space-y-1 px-4">
 				<SearchHeader />
 				<CityFilters />
-
-				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-					{travelPosts.map(post => (
-						<TravelPostCard key={post.id} post={post} />
-					))}
-				</div>
+			</Tabs>
+			<div className="px-4 flex-1 overflow-y-scroll grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto py-5">
+				{travelPosts.map(post => (
+					<TravelPostCard key={post.id} post={post} />
+				))}
+			</div>
+			<div className=" absolute  z-50 bottom-32 left-1/2 right-1/2 ">
+				<Button
+					size="lg"
+					className="fixed bottom-10  border-3 outline-8 bg-black border-white py-5 px-12"
+				>
+					<CirclePlus className="w-4 h-4 mr-1" />
+					Add Post
+				</Button>
 			</div>
 		</div>
 	);
