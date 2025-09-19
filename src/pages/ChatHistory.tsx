@@ -21,6 +21,7 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Checkbox } from '@/components/ui/checkbox';
+import { motion } from 'framer-motion';
 
 // SelectedItemsFooter Component
 interface SelectedItemsFooterProps {
@@ -342,7 +343,12 @@ export default function TravelChatHistory() {
 
 	return (
 		<>
-			<div className="h-screen bg-[#faf9f6] text-gray-900 max-w-6xl mx-auto pt-13 px-4 flex flex-col relative">
+			<motion.div
+				initial={{ opacity: 0, y: 30 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.6, ease: 'easeOut' }}
+				className="h-screen bg-[#faf9f6] text-gray-900 max-w-6xl mx-auto pt-13 px-4 flex flex-col relative"
+			>
 				<SelectedItemsFooter
 					selectedCount={selectedFromFiltered}
 					onDelete={deleteSelected}
@@ -423,7 +429,7 @@ export default function TravelChatHistory() {
 						))
 					)}
 				</div>
-			</div>
+			</motion.div>
 
 			{/* Fixed Bottom Footer */}
 		</>

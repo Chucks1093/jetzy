@@ -12,7 +12,7 @@ import FormInput from '@/components/shared/FormInput';
 import TabTriggers from '@/components/shared/TabTriggers';
 import TravelPostCard from '@/components/dashboard/TravelPostCard';
 import { Tabs } from '@/components/ui/tabs';
-
+import { motion } from 'framer-motion';
 const travelPosts = [
 	{
 		id: '1',
@@ -295,7 +295,12 @@ export function SearchHeader() {
 
 export default function Explore() {
 	return (
-		<div className="h-screen bg-[#faf9f6] text-gray-900 max-w-6xl mx-auto pt-13 px-4 flex flex-col relative">
+		<motion.div
+			initial={{ opacity: 0, y: 30 }}
+			animate={{ opacity: 1, y: 0 }}
+			transition={{ duration: 0.6, ease: 'easeOut' }}
+			className="h-screen bg-[#faf9f6] text-gray-900 max-w-6xl mx-auto pt-13 px-4 flex flex-col relative"
+		>
 			<div className="flex gap-2 items-center mb-2">
 				<Map className="size-7" />
 				<h1 className="text-2xl font-manrope font-medium text-zinc-600">
@@ -311,6 +316,6 @@ export default function Explore() {
 					<TravelPostCard key={post.id} post={post} />
 				))}
 			</div>
-		</div>
+		</motion.div>
 	);
 }

@@ -336,8 +336,8 @@ const AIChatInterface: React.FC = () => {
 	};
 
 	return (
-		<div className="flex justify-between max-w-8xl mx-auto h-screen gap-4 p-4 overflow-hidden ">
-			<div className="flex flex-col h-full overflow-y-auto overflow-x-hidden bg-white py-3 w-[45%] px-2 relative">
+		<div className="flex flex-col md:flex-row justify-between max-w-8xl mx-auto h-screen gap-4 p-4 overflow-hidden ">
+			<div className="flex flex-col h-full overflow-y-auto overflow-x-hidden bg-white py-3 md:w-[45%] px-2 relative">
 				{/* Chat Messages */}
 
 				<div
@@ -361,7 +361,7 @@ const AIChatInterface: React.FC = () => {
 					className="absolute top-0 left-0 w-full z-10 h-full bg-white"
 				/>
 			</div>
-			<div className="rounded-lg overflow-hidden relative w-[65%]">
+			<div className="rounded-lg overflow-hidden relative md:w-[65%]">
 				<img
 					src="/map.png"
 					alt=""
